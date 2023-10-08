@@ -6,6 +6,25 @@
     Topics: Vue.js, Forms, Navigation, Routing \
     This milestone will be evaluated based on an detailed evaluation matrix.
 
+Details:
+The following components / pages should be created (filled with
+dummy data) and will be evaluated (completeness, technology, clean
+implementation) – Max. 25 points
+
+-Home page (2 points)
+
+Forms:
+- Register (2 points)
+- Login (2 points)
+
+- List of the ressources (6 Points)
+- Modal (for error messages) (2 points)
+- Imprint (2 points)
+- Help (2 points)
+  
+- Routing between pages is possible (3 points)
+- Navigationbar on every page (2 points)
+
 2. Milestone (25%)
 
     2. Milestone of the semester project. Has to be ready in the 10. block. \
