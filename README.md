@@ -1,5 +1,14 @@
 # FEWEB_Projekt
 
+Getting Started:
+
+Check Versions to make shure npm and node is installed
+- node -version
+- npm -cersion
+Install -g vue/cli  // -g = global // Git clones don't include
+- npm install @vue/cli
+
+
  1. Milestone (25%)
 
     1. Milestone of the semester project. Has to be ready in the 5. block. \
