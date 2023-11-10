@@ -17,5 +17,6 @@
   <style scoped>
   .input {
     margin: 10px;
+    width: 50%;
   }
   </style>

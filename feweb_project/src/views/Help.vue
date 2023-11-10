@@ -1,8 +1,9 @@
 <template>
     <div class="login">
-      <h1>FAQ</h1>
+      <Title type="h1">FAQ</Title>
      <div>
-        <h2>Wie kann ich mich registrieren?</h2>
+      <Paragraph>
+          <h2>Wie kann ich mich registrieren?</h2>
         <p>Um sich zu registrieren, klicken Sie auf den Button "Registrieren" und füllen Sie das Formular aus.</p>
         <h2>Wie kann ich mich einloggen?</h2>
         <p>Um sich einzuloggen, klicken Sie auf den Button "Login" und füllen Sie das Formular aus.</p>
@@ -22,7 +23,23 @@
         <p>Um ein neues Passwort zu setzen, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</p>
         <h2>Wie kann ich ein neues Passwort setzen?</h2>
         <p>Um ein neues Passwort zu setzen, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</p>
+      </Paragraph>
+      
 
      </div>
     </div>
   </template>
+
+  <script>
+  import Title from "@/components/atoms/Title.vue";
+  import Paragraph from "@/components/atoms/Paragraph.vue";
+
+  export default {
+    name: "Help",
+    components: {
+      Title,
+      Paragraph,
+    },
+  };
+  
+  </script>
