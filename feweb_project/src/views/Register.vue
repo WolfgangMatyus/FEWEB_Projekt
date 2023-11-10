@@ -1,11 +1,27 @@
 <template>
-    <div class="login">
-      <h1>Login</h1>
+    <div class="register">
+      <h1>Registrieren</h1>
       <!-- call the submit function when clicking enter or wehn clicking the button -->
       <!-- the button needs to be a type submit -->
       <form
         @submit.prevent="submit"
       >
+      <div>
+          <div>
+            <label for="firstname">First Name</label>
+          </div>
+          <div>
+            <input type="text" id="firstname" v-model="checkValue" @blur="validate('firstname')"/>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label for="lastname">Last Name</label>
+          </div>
+          <div>
+            <input type="text" id="lastname" v-model="checkValue" @blur="validate('lastname')"/>
+          </div>
+        </div>
         <div>
           <div>
             <label for="email">Email</label>
@@ -35,7 +51,7 @@
         </div>
         <div>
           <!-- the button needs to be a type submit to call the submit function on the form -->
-          <button type="submit">Submit</button>
+          <button type="submit">Register</button>
         </div>
       </form>
     </div>
@@ -44,21 +60,27 @@
   <script>
   import { object, string } from 'yup';
   
-  const loginSchema = object().shape({
+  const registerSchema = object().shape({
+    firstname: string().required(),
+    lastname: string().required(),
     email: string().required().email(),
     password: string().required(),
   });
   
   export default {
-    name: 'LoginView',
+    name: 'Register',
     data() {
       return {
         form: {
           values: {
+            firstname: '',
+            lastname: '',
             email: '',
             password: '',
           },
           errors: {
+            firstname: '',
+            lastname: '',
             email: '',
             password: '',
           },
@@ -70,7 +92,7 @@
       validate(field){
         // promise format
         // validate the field (email or password) form the data (this.form.values)
-        loginSchema
+        registerSchema
           .validateAt(field, this.form.values)
           .then(() => {
             // if everything works
@@ -86,7 +108,7 @@
       },
       async submit() {
           // => { email: '', password: '' }
-          loginSchema
+          registerSchema
             .validate(this.form.values, {
               abortEarly: false,
             }).then(async () => {
@@ -133,4 +155,6 @@
       }
     }
   }
+
+  
   </script>
