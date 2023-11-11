@@ -3,73 +3,18 @@
     <Title type="h1">Registrieren</Title>
     <!-- call the submit function when clicking enter or wehn clicking the button -->
     <!-- the button needs to be a type submit -->
-    <form @submit.prevent="submit">
-      <div>
-        <!-- v-model: for sync of data form.values.email - see data object -->
-        <!-- @blur: when blur occurs call the method validate with 'email' -->
-        <div>
-          <FormField
-            htmlFor="firstname"
-            label="First Name"
-            id="firstname"
-            type="firstname"
-            v-model="form.values.firstname"
-            placeholder="Enter your firstname"
-          />
-          <FormField
-            htmlFor="lastname"
-            label="Last Name"
-            id="lastname"
-            type="lastname"
-            v-model="form.values.lastname"
-            placeholder="Enter your lastname"
-          />
-          <FormField
-            htmlFor="email"
-            label="E-Mail"
-            id="email"
-            type="email"
-            v-model="form.values.email"
-            @blur="validate('email')"
-            placeholder="E-Mail"
-          />
-        </div>
-        <!-- v-if: when form.errors.email is not empty display the message -->
-        <p v-if="!!form.errors.email">
-          {{ form.errors.email }}
-        </p>
-      </div>
-      <div>
-        <!-- v-model: for sync of data form.values.password - see data object -->
-        <!-- @blur: when blur occurs call the method validate with 'password' -->
-        <div>
-          <FormField
-            htmlFor="password"
-            label="Password"
-            id="password"
-            type="password"
-            v-model="form.values.password"
-            @blur="validate('password')"
-            placeholder="Enter your password"
-          />
-        </div>
-        <p v-if="!!form.errors.password">
-          {{ form.errors.password }}
-        </p>
-      </div>
-      <div>
-        <!-- the button needs to be a type submit to call the submit function on the form -->
-        <Button type="submit">Submit</Button>
-      </div>
-    </form>
+
+    <!-- v-model: for sync of data form.values.email - see data object -->
+    <!-- @blur: when blur occurs call the method validate with 'email' -->
+
+    <RegisterForm />
   </div>
 </template>
 
 <script>
 import { object, string } from "yup";
 import Title from "@/components/atoms/Title.vue";
-import Button from "@/components/atoms/Button.vue";
-import FormField from "@/components/molecules/FormField.vue";
+import RegisterForm from "@/components/molecules/RegisterForm.vue";
 
 const registerSchema = object().shape({
   firstname: string().required(),
@@ -170,8 +115,7 @@ export default {
   },
   components: {
     Title,
-    Button,
-    FormField,
+    RegisterForm,
   },
 };
 </script>
