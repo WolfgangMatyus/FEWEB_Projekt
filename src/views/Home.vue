@@ -1,6 +1,7 @@
 <template>
+  <div class="container">
     <div class="Home">
-      <Title type="h1">Home</Title>
+      <Title type="h1">Willkommen auf unsere Seite.</Title>
        <div>
         <paragraph>
           Willkommen auf unsere Seite.
@@ -8,6 +9,8 @@
         
        </div>
        </div>
+  </div>
+
   </template>
 
 <script>

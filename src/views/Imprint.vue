@@ -1,6 +1,8 @@
 <template>
-  <div class="Imprint">
+  <div class="container">
+    <div class="Imprint">
     <Title type="h1">Imprint</Title>
+    <hr>
     <div>
       <Paragraph>
         <h2>Angaben gemäß § 5 ECG</h2>
@@ -16,6 +18,8 @@
       </Paragraph>
     </div>
   </div>
+  </div>
+ 
 </template>
 
 <script>

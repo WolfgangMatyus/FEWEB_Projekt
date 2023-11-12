@@ -1,6 +1,8 @@
 <template>
-  <div class="register">
+  <div class="container">
+    <div class="register">
     <Title type="h1">Registrieren</Title>
+    <hr>
     <!-- call the submit function when clicking enter or wehn clicking the button -->
     <!-- the button needs to be a type submit -->
     <form @submit.prevent="submit">
@@ -63,6 +65,8 @@
       </div>
     </form>
   </div>
+  </div>
+  
 </template>
 
 <script>

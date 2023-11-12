@@ -1,6 +1,7 @@
 <template>
     <component :is="type">
       <slot></slot>
+      
     </component>
   </template>
   
