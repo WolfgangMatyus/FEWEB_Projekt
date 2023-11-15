@@ -32,7 +32,7 @@ export default {
       titleType: 'h1',
       titleContent: 'Willkommen auf unserer Auktionsplattform',
       subtitleContent: 'Hier sehen Sie unsere neuesten Objekte:',
-      ClassStyle: 'col-md-6 col-sm-6 col-lg-4',
+      ClassStyle: ' col-sm-7 col-md-5 col-lg-3',
       cards: [
         { id: 1, title: "Auktionsobjekt 1", subtitle: "Dieses Objekt ist ganz was besonderes...", imageUrl:"/src/assets/img/SYS_logo.jpg", content: "Content 1" },
         { id: 2, title: "Auktionsobjekt 2", subtitle: "Dieses Objekt ist einzigartig...", imageUrl:"/img/logo.png", content: "Content 2" },

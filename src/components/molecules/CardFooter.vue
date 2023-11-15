@@ -2,10 +2,10 @@
 <template>
   <div class="row">
     <div class="col">
-      <Button :text="buttonText" @button-click="onButtonClick">{{ buttonText }}</Button>
+      <Button :text="buttonText" @button-click="onButtonClick" :class="ClassStyleBtn">{{ buttonText }}</Button>
     </div>
     <div class="col">
-      <Button :text="buttonText1" @button-click="onButtonClick">{{ buttonText1 }}</Button>
+      <Button :text="buttonText1" @button-click="onButtonClick" :class="ClassStyleBtn">{{ buttonText1 }}</Button>
     </div>
   </div>
     
@@ -19,16 +19,21 @@
       Button
     },
     props: {
-    buttonText: {
-      type: String,
-     default: 'In den Warenkorb',
-  },
-    buttonText1: {
-      type: String,
-      default: 'Jetzt Kaufen',
-  },
-},
+      buttonText: {
+        type: String,
+        default: 'In den Warenkorb',
+      },
+      buttonText1: {
+        type: String,
+        default: 'Jetzt Kaufen',
+      },
+    },
 
+    data () {
+      return {
+        ClassStyleBtn: 'btn btn-md btn-block h-100 d-flex flex-column justify-content-center',
+      }
+    },
     methods: {
       onButtonClick() {
         this.$emit('footer-button-click');
