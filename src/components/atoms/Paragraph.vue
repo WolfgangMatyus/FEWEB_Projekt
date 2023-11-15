@@ -1,3 +1,4 @@
+<!-- Paragraph.vue -->
 <template>
     <p>
       <slot></slot>

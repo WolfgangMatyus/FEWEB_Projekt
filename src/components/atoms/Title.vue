@@ -1,6 +1,8 @@
+<!-- Title.vue -->
 <template>
     <component :is="type">
       <slot></slot>
+      
     </component>
   </template>
   
