@@ -1,3 +1,4 @@
+<!-- Modal.vue -->
 <template>
     <div class="modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -29,11 +30,12 @@ export default {
       Title,
       Paragraph
     },
- data() {
-    return {
-      titleType: 'h5',
-      errormessage: 'Es ist ein Fehler aufgetreten!'
-    };
+
+  props: {
+    show: Boolean,
+    title: String,
+    errormessage: String,
+    buttonText: String,
   },
 }
 </script>
