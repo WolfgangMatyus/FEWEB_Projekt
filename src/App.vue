@@ -22,6 +22,10 @@
   list-style: none;
   /*background-color: brown;*/
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
+}
+
+.nav-link:hover {
+  color:rgb(209, 6, 6);
 }
 </style>
