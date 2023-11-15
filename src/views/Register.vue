@@ -27,7 +27,7 @@ export default {
   name: "Register",
   data() {
     return {
-      titleType: 'h1',
+      titleType: 'h2',
       titleContent: 'Registrieren',
       
       form: {

@@ -7,11 +7,7 @@ const routes = [
     name: 'home',
     component: Home
   },
-  {
-    path: '/posts/:id',
-    name: 'post',
-    component: Home
-  },
+
   {
     path: '/login',
     name: 'login',
@@ -20,22 +16,22 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Register.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
   },
   {
     path: '/help',
     name: 'help',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Help.vue'),
+    component: () => import(/* webpackChunkName: "help" */ '../views/Help.vue'),
   },
   {
     path: '/imprint',
     name: 'imprint',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Imprint.vue'),
+    component: () => import(/* webpackChunkName: "imprint" */ '../views/Imprint.vue'),
   },
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "login" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   /*{
     path: '/about',
