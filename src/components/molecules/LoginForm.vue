@@ -32,16 +32,18 @@
     },
     data() {
       return {
-        formData: {
-          email: '',
-          password: '',
+        form: {
+          values: {
+            email: '',
+            password: '',
+          },
         },
       };
     },
     methods: {
       submitForm() {
         // Perform your login logic here using this.formData
-        console.log('Submitting form with data:', this.formData);
+        console.log('Submitting form with data:', this.form.values);
         // You might want to make an API request to a server for authentication.
       },
     },

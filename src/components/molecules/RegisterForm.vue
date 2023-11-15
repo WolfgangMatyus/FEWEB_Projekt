@@ -38,7 +38,7 @@
   
   <script>
   import FormField from '@/components/molecules/FormField.vue';
-    import Button from '@/components/atoms/Button.vue';
+  import Button from '@/components/atoms/Button.vue';
   
   export default {
     name: 'RegisterForm',
@@ -48,16 +48,20 @@
     },
     data() {
       return {
-        formData: {
-          email: '',
-          password: '',
+        form: {
+          values: {
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+          },
         },
       };
     },
     methods: {
       submitForm() {
         // Perform your login logic here using this.formData
-        console.log('Submitting form with data:', this.formData);
+        console.log('Submitting form with data:', this.form.values);
         // You might want to make an API request to a server for authentication.
       },
     },
