@@ -2,11 +2,9 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 <template>
   <div class="container">
   <div class="About">
-    <Title type="h1">Über uns</Title>
+    <Title :type="titleType">{{ titleContent }}</Title>
     <hr>
-    <Paragraph>
-      Wir sind 3 Fh- Kollegen die Spaß an Webentwicklung haben.
-    </Paragraph>
+      <Paragraph>{{ ParagraphContent }}</Paragraph>
   </div>
   </div>
   
@@ -21,6 +19,14 @@ export default {
   components: {
     Title,
     Paragraph,
+  },
+
+  data() {
+    return {
+      titleType: 'h1',
+      titleContent: 'Über uns',
+      ParagraphContent: 'Wir sind 3 Fh- Kollegen die Spaß an Webentwicklung haben.',
+    };
   },
 };
 </script>

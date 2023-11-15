@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="login">
-      <Title type="h1">FAQ</Title>
+      <Title :type="titleType">{{ titleContent }}</Title>
       <hr>
      <div>
       <Paragraph>
@@ -17,12 +17,6 @@
         <Paragraph>Um Ihre Daten zu löschen, klicken Sie auf den Button "Profil" und klicken Sie auf den Button "Löschen".</Paragraph>
         <Title type="h2">Wie kann ich ein neues Passwort anfordern?</Title>
         <Paragraph>Um ein neues Passwort anzufordern, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</Paragraph>
-        <Title type="h2">Wie kann ich ein neues Passwort setzen?</Title>
-        <Paragraph>Um ein neues Passwort zu setzen, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</Paragraph>
-        <Title type="h2">Wie kann ich ein neues Passwort setzen?</Title>
-        <Paragraph>Um ein neues Passwort zu setzen, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</Paragraph>
-        <Title type="h2">Wie kann ich ein neues Passwort setzen?</Title>
-        <Paragraph>Um ein neues Passwort zu setzen, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</Paragraph>
         <Title type="h2">Wie kann ich ein neues Passwort setzen?</Title>
         <Paragraph>Um ein neues Passwort zu setzen, klicken Sie auf den Button "Login" und klicken Sie auf den Button "Passwort vergessen".</Paragraph>
       </Paragraph>
@@ -42,6 +36,13 @@
       Title,
       Paragraph,
     },
+
+    data() {
+    return {
+      titleType: 'h1',
+      titleContent: 'FAQ',
+    };
+  },
   };
   
   </script>

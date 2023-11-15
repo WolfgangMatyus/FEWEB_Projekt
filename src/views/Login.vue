@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="login">
-    <Title type="h1">Login</Title>
+      <Title :type="titleType">{{ titleContent }}</Title>
     <hr>
     <!-- call the submit function when clicking enter or when clicking the button -->
     <!-- the button needs to be a type submit -->
@@ -75,6 +75,8 @@ export default {
   name: 'Login',
   data() {
     return {
+      titleType: 'h1',
+      titleContent: 'Login',
       form: {
         values: {
           email: '',

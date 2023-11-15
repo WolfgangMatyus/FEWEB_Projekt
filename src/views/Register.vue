@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="register">
-    <Title type="h1">Registrieren</Title>
+      <Title :type="titleType">{{ titleContent }}</Title>
     <hr>
     <!-- call the submit function when clicking enter or wehn clicking the button -->
     <!-- the button needs to be a type submit -->
@@ -86,6 +86,9 @@ export default {
   name: "Register",
   data() {
     return {
+      titleType: 'h1',
+      titleContent: 'Registrieren',
+      
       form: {
         values: {
           firstname: "",

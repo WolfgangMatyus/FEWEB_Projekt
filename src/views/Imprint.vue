@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="Imprint">
-    <Title type="h1">Imprint</Title>
+      <Title :type="titleType">{{ titleContent }}</Title>
     <hr>
     <div>
         <Title type="h2">Angaben gemäß § 5 ECG</Title>
@@ -31,6 +31,13 @@ export default {
   components: {
     Title,
     Paragraph,
+  },
+
+  data() {
+    return {
+      titleType: 'h1',
+      titleContent: 'Imprint',
+    };
   },
 };
 </script>
