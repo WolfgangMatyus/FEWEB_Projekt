@@ -1,11 +1,14 @@
 <!-- CardFooter.vue -->
 <template>
-    <div>
+  <div class="row">
+    <div class="col">
       <Button :text="buttonText" @button-click="onButtonClick">{{ buttonText }}</Button>
     </div>
-    <div>
+    <div class="col">
       <Button :text="buttonText1" @button-click="onButtonClick">{{ buttonText1 }}</Button>
     </div>
+  </div>
+    
   </template>
   
   <script>
@@ -15,13 +18,17 @@
     components: {
       Button
     },
-
-    data() {
-    return {
-      buttonText: this.buttonText || 'In den Warenkorb',
-      buttonText1: this.buttonText1 || 'Jetzt Kaufen',
-    };
+    props: {
+    buttonText: {
+      type: String,
+     default: 'In den Warenkorb',
   },
+    buttonText1: {
+      type: String,
+      default: 'Jetzt Kaufen',
+  },
+},
+
     methods: {
       onButtonClick() {
         this.$emit('footer-button-click');

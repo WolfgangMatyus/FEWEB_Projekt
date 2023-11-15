@@ -4,7 +4,7 @@
     <Image :url="imageUrl" />
   </div>
     <div>
-      <Paragraph :text="content" />
+      <Paragraph :text="content">{{ content }}</Paragraph>
     </div>
   </template>
   

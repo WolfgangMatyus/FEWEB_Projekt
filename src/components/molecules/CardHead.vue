@@ -15,6 +15,6 @@ export default {
     Title,
     Paragraph
   },
-  props: ['title', 'subtitle']
+  props: ['title', 'subtitle', 'type']
 }
 </script>
