@@ -20,8 +20,8 @@
 
 <script>
 import Button from '@/components/atoms/Button.vue';
-import Title from '@/components/atoms/Button.vue';
-import Paragraph from '@/components/atoms/Button.vue';
+import Title from '@/components/atoms/Title.vue';
+import Paragraph from '@/components/atoms/Paragraph.vue';
 
 
 export default {

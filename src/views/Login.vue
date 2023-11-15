@@ -7,6 +7,7 @@
     <!-- call the submit function when clicking enter or when clicking the button -->
     <!-- the button needs to be a type submit -->
     <div class="justify-content-center">
+      <Modal :show="showModal" :title="modalTitle" :errormessage="modalErrorMessage" :buttonText="modalButtonText" @button-click="closeModal" />
     <form @submit.prevent="submit">
       <div>
         <!-- v-model: for sync of data form.values.email - see data object -->
@@ -51,6 +52,7 @@
         <Button type="submit">Submit</Button>
       </div>
     </form>
+    
   </div>
   </div>
 </div>
@@ -61,6 +63,7 @@ import { object, string } from 'yup';
 import Title from '@/components/atoms/Title.vue';
 import Button from '@/components/atoms/Button.vue';
 import FormField from '@/components/molecules/FormField.vue';
+import Modal from '@/views/Modal.vue';
 
 const loginSchema = object().shape({
   email: string().required().email('Invalid email address'),
@@ -72,6 +75,7 @@ export default {
     Title,
     Button,
     FormField,
+    Modal,
   },
   name: 'Login',
   data() {
@@ -88,6 +92,10 @@ export default {
           password: '',
         },
       },
+      showModal: false,
+      modalTitle: 'Error',
+      modalErrorMessage: 'Es ist ein Fehler aufgetreten!',
+      modalButtonText: 'OK',
     };
   },
   methods: {
@@ -148,6 +156,10 @@ export default {
           // z => signature -> is an encrypted version of the header and payload
         })
         .catch((err) => {
+          this.showModal = true;
+          this.modalTitle = 'Error';
+          this.modalErrorMessage = 'Es ist ein Fehler aufgetreten!';
+          this.modalButtonText = 'OK';
           console.log('err sddf');
           console.log(err);
           // if error
@@ -158,6 +170,11 @@ export default {
             });
           }
         });
+
+        
+    },
+    closeModal() {
+      this.showModal = false;
     },
   },
 };
