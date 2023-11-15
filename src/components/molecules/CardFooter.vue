@@ -21,11 +21,11 @@
     props: {
       buttonText: {
         type: String,
-        default: 'In den Warenkorb',
+        default: 'Auf die Merkliste',
       },
       buttonText1: {
         type: String,
-        default: 'Jetzt Kaufen',
+        default: 'Gebot abgeben',
       },
     },
 

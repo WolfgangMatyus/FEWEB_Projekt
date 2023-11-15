@@ -3,19 +3,40 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <Title :type="titleType" :text="title">{{ title }}</Title>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+          <Paragraph :text="errormessage">{{ errormessage }}</Paragraph>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <Button :text="buttonText" @button-click="onButtonClick" :class="ClassStyleBtn">{{ buttonText }}</Button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import Button from '@/components/atoms/Button.vue';
+import Title from '@/components/atoms/Button.vue';
+import Paragraph from '@/components/atoms/Button.vue';
+
+
+export default {
+  components: {
+      Button,
+      Title,
+      Paragraph
+    },
+ data() {
+    return {
+      titleType: 'h5',
+      errormessage: 'Es ist ein Fehler aufgetreten!'
+    };
+  },
+}
+</script>
+
 
   
