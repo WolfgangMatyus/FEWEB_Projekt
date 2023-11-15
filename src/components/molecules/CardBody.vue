@@ -1,5 +1,8 @@
 <!-- CardBody.vue -->
 <template>
+  <div>
+    <Image :url="imageUrl" />
+  </div>
     <div>
       <Paragraph :text="content" />
     </div>
@@ -7,12 +10,14 @@
   
   <script>
   import Paragraph from '@/components/atoms/Paragraph.vue';
+  import Image from '@/components/atoms/Image.vue';
   
   export default {
     components: {
-      Paragraph
+      Paragraph,
+      Image,
     },
-    props: ['content']
+    props: ['content', 'imageUrl'],
   }
   </script>
   

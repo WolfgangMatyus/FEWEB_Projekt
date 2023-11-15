@@ -1,8 +1,8 @@
 <!-- CardHead.vue -->
 <template>
   <div>
-    <Title :text="title" />
-    <Paragraph :text="subtitle" />
+    <Title type="h2" :text="title">{{ title }}</Title>
+    <Paragraph :text="subtitle">{{ subtitle }}</Paragraph>
   </div>
 </template>
 

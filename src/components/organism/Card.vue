@@ -2,7 +2,9 @@
 <template>
     <div class="card">
       <CardHead :title="cardData.title" :subtitle="cardData.subtitle" />
-      <CardBody :content="cardData.content" />
+      <hr>
+      <CardBody :content="cardData.content" :imageUrl="cardData.imageUrl" />
+      <hr>
       <CardFooter :buttonText="cardData.buttonText" @footer-button-click="onFooterButtonClick" />
     </div>
   </template>
@@ -28,7 +30,7 @@
   </script>
   
   <style scoped>
-  /* Add your card styling here */
+
   .card {
     border: 1px solid #ccc;
     padding: 10px;
