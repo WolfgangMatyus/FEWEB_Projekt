@@ -1,11 +1,13 @@
 <template>
-  <div class="login">
-    <Title type="h1">Login</Title>
+  <div class="container">
+    <div class="login">
+      <Title :type="titleType">{{ titleContent }}</Title>
+    <hr>
     <!-- call the submit function when clicking enter or when clicking the button -->
     <!-- the button needs to be a type submit -->
+    <div class="justify-content-center">
     <form @submit.prevent="submit">
       <div>
-
         <!-- v-model: for sync of data form.values.email - see data object -->
         <!-- @blur: when blur occurs call the method validate with 'email' -->
         <div>
@@ -49,6 +51,8 @@
       </div>
     </form>
   </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -71,6 +75,8 @@ export default {
   name: 'Login',
   data() {
     return {
+      titleType: 'h1',
+      titleContent: 'Login',
       form: {
         values: {
           email: '',
