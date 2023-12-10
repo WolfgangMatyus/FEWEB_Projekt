@@ -4,11 +4,15 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
   <div class="Profile">
     <Title :type="titleType">{{ titleContent }}</Title>
     <div>
+      <button @click="this.store.changeMail">Mail Change</button>
+         <div>
+          {{ this.store.email }}
+        </div>
       <Paragraph v-if="this.store.isLoggedIn">
         <b>
           Name:
         </b>
-        {{ this.store.username }}
+     
       </Paragraph>
     </div>
     

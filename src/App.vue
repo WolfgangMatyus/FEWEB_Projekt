@@ -2,7 +2,7 @@
   <div class="container-fluid p-5 text-center">
     <nav class="row-col-6 ">
     <router-link class="nav-link " to="/">Home </router-link> 
-    <router-link class="nav-link " to="/about">About </router-link> 
+    <router-link class="nav-link " to="/about">Profile </router-link> 
     <router-link class="nav-link " to="/login">Login </router-link>
     <router-link class="nav-link " to="/register">Register </router-link>
     <router-link class="nav-link " to="/help">Help </router-link>

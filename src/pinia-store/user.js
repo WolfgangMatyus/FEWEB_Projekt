@@ -18,5 +18,11 @@ export const useUserStore = defineStore('user', {
       this.email = payload.email;
       this.username = 'User-' + payload.email.split('@')[0];
     },
+    changeMail () {
+      this.email = 'hat geklappt';
   },
+  mutations: {
+    
+    },
+  }
 });
