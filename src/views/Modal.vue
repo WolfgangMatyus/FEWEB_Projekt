@@ -23,8 +23,14 @@ import Button from '@/components/atoms/Button.vue';
 import Title from '@/components/atoms/Title.vue';
 import Paragraph from '@/components/atoms/Paragraph.vue';
 
-
 export default {
+  name: 'Modal',
+  data() {
+    return {
+      titleType: 'h2',
+      titleContent: 'ERROR',
+    }
+  },
   components: {
       Button,
       Title,

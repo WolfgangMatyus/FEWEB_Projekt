@@ -18,9 +18,7 @@
 <style>
 .nav-link {
   display: inline;
-  /*color: white;*/
   list-style: none;
-  /*background-color: brown;*/
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 2rem;
 }
