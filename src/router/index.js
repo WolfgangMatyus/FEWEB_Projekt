@@ -29,9 +29,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "imprint" */ '../views/Imprint.vue'),
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),
+    path: '/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
   },
   /*{
     path: '/about',
