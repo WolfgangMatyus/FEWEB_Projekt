@@ -24,7 +24,7 @@ const registerSchema = object().shape({
 });
 
 export default {
-  name: "Register",
+  name: 'Register',
   data() {
     return {
       titleType: 'h2',

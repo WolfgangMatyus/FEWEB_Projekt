@@ -4,19 +4,17 @@ import { defineStore } from 'pinia';
 export const useUserStore = defineStore('user', {
   state () {
     return {
-      email: 'Testinger',
-      username: '',
+      email: '',
     }
   },
   getters: {
     isLoggedIn () {
-      return this.email !== '' && this.username !== '';
+      return this.email !== '';
     },
   },
   actions: {
     login (payload) {
       this.email = payload.email;
-      this.username = 'User-' + payload.email.split('@')[0];
     },
   },
 });

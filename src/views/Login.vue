@@ -1,4 +1,3 @@
-
 <!-- Login.vue -->
 <template>
   <div class="container">
@@ -7,10 +6,6 @@
       <hr>
       <!-- call the submit function when clicking enter or when clicking the button -->
       <!-- the button needs to be a type submit -->
-
-    <div>pinia-store
-      {{this.store.email}}
-    </div>
     <LoginForm />
     </div>
 </div>
@@ -83,29 +78,29 @@ export default {
             email: '',
             password: '',
           };
+          this.store.login(this.form.values);
+          //// make a post request to the server with the json from this.form.values
+          //const response = await fetch('/login', {
+          //  method: 'POST',
+          //  body: JSON.stringify(this.form.values),
+          //});
+          //// get the response from the server
+          //const data = await response.json();
 
-          // make a post request to the server with the json from this.form.values
-          const response = await fetch('/login', {
-            method: 'POST',
-            body: JSON.stringify(this.form.values),
-          });
-          // get the response from the server
-          const data = await response.json();
-
-          // get the token from the data from the server
-          const token = data.accessToken;
-          // save the token in the browser for reuse
-          // e.g. for making requests to the servers private resources
-          // e.g. update user, delete user...
-          // persisted after the browser window is closed
-          localStorage.setItem('token', token);
-          // removed after the browser window ist closed
-          // sessionStorage.setItem('token', token);
-          // JWT - JSON Web Token
-          // token => "y.x.z"
-          // y => header -> base64 of the following { alg: "",  }
-          // x => payload -> where the data is stored
-          // z => signature -> is an encrypted version of the header and payload
+          // // get the token from the data from the server
+          // const token = data.accessToken;
+          // // save the token in the browser for reuse
+          // // e.g. for making requests to the servers private resources
+          // // e.g. update user, delete user...
+          // // persisted after the browser window is closed
+          //  localStorage.setItem('token', token);
+          // // removed after the browser window ist closed
+          // // sessionStorage.setItem('token', token);
+          // // JWT - JSON Web Token
+          // // token => "y.x.z"
+          // // y => header -> base64 of the following { alg: "",  }
+          // // x => payload -> where the data is stored
+          // // z => signature -> is an encrypted version of the header and payload
         })
         .catch((err) => {
           console.log('err sddf');
@@ -118,8 +113,6 @@ export default {
             });
           }
         });
-
-        
     },
   },
 };

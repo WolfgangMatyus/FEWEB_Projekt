@@ -2,16 +2,14 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 
 <template>
   <div class="container">
-  <div class="Profile">
+  <div class="profile">
     <Title :type="titleType">{{ titleContent }}</Title>
     <div>
       <Paragraph v-if="this.store.isLoggedIn">
         <b>
           Name:
         </b>
-        {{ this.store.username }}
         {{ this.store.email }}
-        {{ this.store.token }}
       </Paragraph>
     </div>
     
@@ -28,7 +26,7 @@ import Paragraph from "@/components/atoms/Paragraph.vue";
 import { useUserStore } from '@/pinia-store/user';
 
 export default {
-  name: "Profile",
+  name: 'Profile',
   components: {
     Title,
     Paragraph,

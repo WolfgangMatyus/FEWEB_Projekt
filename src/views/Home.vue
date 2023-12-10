@@ -6,14 +6,9 @@
       <div>
         <Paragraph>{{ subtitleContent }}</Paragraph>
       </div>
-      <div>pinia-store
-      {{this.store.email}}
-    </div>
-
       <div class="row">
         <Card v-for="(card, index) in cards" :key="index" :cardData="card" :class="ClassStyle"/>
       </div>
-
     </div>
   </div>
 </template>
