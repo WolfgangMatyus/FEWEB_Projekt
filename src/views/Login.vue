@@ -1,3 +1,4 @@
+
 <!-- Login.vue -->
 <template>
   <div class="container">
@@ -6,9 +7,10 @@
       <hr>
       <!-- call the submit function when clicking enter or when clicking the button -->
       <!-- the button needs to be a type submit -->
-      <div class="justify-content-center">
-        <Modal :show="showModal" :title="modalTitle" :errormessage="modalErrorMessage" :buttonText="modalButtonText" @button-click="closeModal"></Modal>
-      </div>
+
+    <div>pinia-store
+      {{this.store.email}}
+    </div>
     <LoginForm />
     </div>
 </div>
@@ -18,7 +20,7 @@
 import { object, string } from 'yup';
 import Title from '@/components/atoms/Title.vue';
 import LoginForm from '@/components/molecules/LoginForm.vue';
-import Modal from '@/views/Modal.vue';
+import { useUserStore } from '@/pinia-store/user';
 
 const loginSchema = object().shape({
   email: string().required().email('Invalid email address'),
@@ -29,11 +31,11 @@ export default {
   components: {
     Title,
     LoginForm,
-    Modal,
   },
   name: 'Login',
   data() {
     return {
+      store: useUserStore(),
       titleType: 'h1',
       titleContent: 'Login',
       form: {
@@ -46,10 +48,6 @@ export default {
           password: '',
         },
       },
-      showModal: false,
-      modalTitle: 'Error',
-      modalErrorMessage: 'Es ist ein Fehler aufgetreten!',
-      modalButtonText: 'OK',
     };
   },
   methods: {
@@ -110,10 +108,6 @@ export default {
           // z => signature -> is an encrypted version of the header and payload
         })
         .catch((err) => {
-          this.showModal = true;
-          this.modalTitle = 'Error';
-          this.modalErrorMessage = 'Es ist ein Fehler aufgetreten!';
-          this.modalButtonText = 'OK';
           console.log('err sddf');
           console.log(err);
           // if error
@@ -126,9 +120,6 @@ export default {
         });
 
         
-    },
-    closeModal() {
-      this.showModal = false;
     },
   },
 };
