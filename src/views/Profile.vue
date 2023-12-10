@@ -1,4 +1,5 @@
 import Paragraph from '@/components/atoms/Paragraph.vue';
+
 <template>
   <div class="container">
   <div class="Profile">
@@ -9,6 +10,8 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
           Name:
         </b>
         {{ this.store.username }}
+        {{ this.store.email }}
+        {{ this.store.token }}
       </Paragraph>
     </div>
     
