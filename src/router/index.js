@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/help',
     name: 'help',
-    component: () => import(/* webpackChunkName: "help" */ '../views/Help.vue'),
+    component: () => import(/* webpackChunkName: "help" */ '../views/FAQ.vue'),
   },
   {
     path: '/imprint',
@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),
   },
   /*{
     path: '/about',
