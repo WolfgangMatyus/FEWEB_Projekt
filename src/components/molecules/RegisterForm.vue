@@ -1,93 +1,41 @@
 <template>
   <form @submit.prevent="submitForm">
-    <FormField
-      htmlFor="username"
-      label="User Name"
-      id="username"
-      type="username"
-      v-model="form.values.username"
-      placeholder="Enter your username"
-    />
-    <FormField
-      htmlFor="email"
-      label="E-Mail"
-      id="email"
-      type="email"
-      v-model="form.values.email"
-      placeholder="E-Mail"
-    />
-    <FormField
-      htmlFor="password"
-      label="Password"
-      id="password"
-      type="password"
-      v-model="form.values.password"
-      placeholder="Enter your password"
-    />
-    <Button type="submit">Register</Button>
+    <label for="username">Username:</label>
+    <br />
+    <input v-model="formData.username" type="text" id="username" />
+    <br />
+    <label for="email">Email:</label>
+    <br />
+    <input v-model="formData.email" type="email" id="email" />
+    <br />
+    <label for="password">Password:</label>
+    <br />
+    <input v-model="formData.password" type="password" id="password" />
+    <br />
+    <button type="submit">Register</button>
   </form>
 </template>
 
 <script>
-import { ref } from 'vue';
-import FormField from '@/components/molecules/FormField.vue';
-import Button from '@/components/atoms/Button.vue';
+import { ref } from "vue";
 
 export default {
-  name: 'RegisterForm',
-    components: {
-      FormField,
-      Button,
-    },
-  setup() {
-    // Reactive data
-    const form = ref({
-      values: {
-        username: 'bullshit',
-        email: 'bull@shit.at',
-        password: '123',
-      },
+  setup(_, { emit }) {
+    // Reactive properties for form fields
+    const formData = ref({
+      username: "",
+      email: "",
+      password: "",
     });
 
-    // Function to submit the register form
-    const submitForm = async () => {
-      try {
-        // Your async code to submit the form data
-        // For example, make an API call to register the user
+    const submitForm = () => {
+      // Validate form data and perform any necessary actions
 
-        // Simulate form data (replace with actual form data)
-        const formData = {
-          username: form.value.values.username,
-          email: form.value.values.email,
-          password: form.value.values.password,
-          // ... other form fields
-        };
-
-        // Make API call to register the user
-        const response = await fetch('/api/adduser', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          // User registered successfully
-          // Handle success as needed
-        } else {
-          // Handle error response
-          const errorData = await response.json();
-          console.error(`Error: ${errorData.message}`);
-          
-        }
-      } catch (error) {
-        // Handle network or other errors
-        console.error('Error registering user:', error);
-      }
+      // Emit a custom event with the form data
+      emit("form-submitted", formData.value);
     };
 
-    return { form, submitForm };
+    return { formData, submitForm };
   },
 };
 </script>
