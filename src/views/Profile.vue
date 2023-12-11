@@ -1,8 +1,17 @@
 import Paragraph from '@/components/atoms/Paragraph.vue';
 <template>
   <div class="container">
-  <div class="About">
+  <div class="Profile">
     <Title :type="titleType">{{ titleContent }}</Title>
+    <div>
+      <Paragraph v-if="this.store.isLoggedIn">
+        <b>
+          Name:
+        </b>
+        {{ this.store.username }}
+      </Paragraph>
+    </div>
+    
     <hr>
       <Paragraph>{{ ParagraphContent }}</Paragraph>
   </div>
@@ -13,9 +22,10 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 <script>
 import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
+import { useUserStore } from '@/pinia-store/user';
 
 export default {
-  name: "About",
+  name: "Profile",
   components: {
     Title,
     Paragraph,
@@ -23,10 +33,15 @@ export default {
 
   data() {
     return {
+      store: useUserStore(),
       titleType: 'h1',
       titleContent: 'Über uns',
       ParagraphContent: 'Wir sind 3 Fh- Kollegen die Spaß an Webentwicklung haben.',
     };
+  },
+  mounted: async function () {
+    console.log('mounted about');
+    console.log(this.store.isLoggedIn);
   },
 };
 </script>

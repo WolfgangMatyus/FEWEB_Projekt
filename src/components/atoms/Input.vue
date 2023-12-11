@@ -1,5 +1,5 @@
 <template>
-    <input class="input" :id="id" :type="type" :value="value" :placeholder="placeholder">
+    <input class="input" :id="id" :type="type" :value="value" v-model="form.values.email" :placeholder="placeholder" @blur="validate('email')" >
   </template>
   
   <script>

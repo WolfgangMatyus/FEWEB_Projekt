@@ -1,65 +1,24 @@
+<!-- Login.vue -->
 <template>
   <div class="container">
     <div class="login">
       <Title :type="titleType">{{ titleContent }}</Title>
-    <hr>
-    <!-- call the submit function when clicking enter or when clicking the button -->
-    <!-- the button needs to be a type submit -->
-    <div class="justify-content-center">
-    <form @submit.prevent="submit">
-      <div>
-        <!-- v-model: for sync of data form.values.email - see data object -->
-        <!-- @blur: when blur occurs call the method validate with 'email' -->
-        <div>
-          <FormField
-            htmlFor="email"
-            label="E-Mail"
-            id="email"
-            type="email"
-            v-model="form.values.email"
-            @blur="validate('email')"
-            placeholder="E-Mail"
-          />
-        </div>
-        <!-- v-if: when form.errors.email is not empty display the message -->
-        <p v-if="!!form.errors.email">
-          {{ form.errors.email }}
-        </p>
+      <hr>
+      <!-- call the submit function when clicking enter or when clicking the button -->
+      <!-- the button needs to be a type submit -->
+      <div class="justify-content-center">
+        <Modal :show="showModal" :title="modalTitle" :errormessage="modalErrorMessage" :buttonText="modalButtonText" @button-click="closeModal"></Modal>
       </div>
-      <div>
-  
-        <!-- v-model: for sync of data form.values.password - see data object -->
-        <!-- @blur: when blur occurs call the method validate with 'password' -->
-        <div>
-          <FormField
-            htmlFor="password"
-            label="Password"
-            id="password"
-            type="password"
-            v-model="form.values.password"
-            @blur="validate('password')"
-            placeholder="Enter your password"
-          />
-        </div>
-        <p v-if="!!form.errors.password">
-          {{ form.errors.password }}
-        </p>
-      </div>
-      <div>
-        <!-- the button needs to be a type submit to call the submit function on the form -->
-        <Button type="submit">Submit</Button>
-      </div>
-    </form>
-  </div>
-  </div>
+    <LoginForm />
+    </div>
 </div>
 </template>
 
 <script>
 import { object, string } from 'yup';
 import Title from '@/components/atoms/Title.vue';
-import Button from '@/components/atoms/Button.vue';
-import FormField from '@/components/molecules/FormField.vue';
+import LoginForm from '@/components/molecules/LoginForm.vue';
+import Modal from '@/views/Modal.vue';
 
 const loginSchema = object().shape({
   email: string().required().email('Invalid email address'),
@@ -69,8 +28,8 @@ const loginSchema = object().shape({
 export default {
   components: {
     Title,
-    Button,
-    FormField,
+    LoginForm,
+    Modal,
   },
   name: 'Login',
   data() {
@@ -87,6 +46,10 @@ export default {
           password: '',
         },
       },
+      showModal: false,
+      modalTitle: 'Error',
+      modalErrorMessage: 'Es ist ein Fehler aufgetreten!',
+      modalButtonText: 'OK',
     };
   },
   methods: {
@@ -147,6 +110,10 @@ export default {
           // z => signature -> is an encrypted version of the header and payload
         })
         .catch((err) => {
+          this.showModal = true;
+          this.modalTitle = 'Error';
+          this.modalErrorMessage = 'Es ist ein Fehler aufgetreten!';
+          this.modalButtonText = 'OK';
           console.log('err sddf');
           console.log(err);
           // if error
@@ -157,6 +124,11 @@ export default {
             });
           }
         });
+
+        
+    },
+    closeModal() {
+      this.showModal = false;
     },
   },
 };
