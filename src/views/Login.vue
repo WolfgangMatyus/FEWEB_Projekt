@@ -33,9 +33,16 @@ export default {
     const registeredUser = ref(null);
 
     const handleFormSubmitted = async (formData) => {
+      console.log("Form data received:", formData);
       try {
+        // Überprüfe, ob formData Werte für username und password enthält
+        if (!formData.username || !formData.password) {
+          console.error("Username and password are required.");
+          return;
+        }
+
         // Your API call code here
-        const response = await fetch("/auth/token", {
+        const response = await fetch("/api/auth/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,8 +53,16 @@ export default {
         console.log(response);
 
         if (response.ok) {
+          const isLoggedIn = true;
           // API call succeeded, handle success
           registeredUser.value = formData;
+          const data = await response.json();
+          const { token } = data;
+
+          // Store the JWT token in the state
+          localStorage.setItem("access_token", token);
+          localStorage.setItem("isLoggedIn", isLoggedIn);
+          window.location.href = "/profile";
         } else {
           // API call failed, handle error
           console.error("API call failed:", response.statusText);
@@ -56,9 +71,10 @@ export default {
         // Handle other errors (e.g., network error)
         console.error("Error submitting form:", error);
       }
+      console.log(localStorage.getItem("access_token"));
     };
-
     return { registeredUser, handleFormSubmitted };
+   
   },
 };
 </script>

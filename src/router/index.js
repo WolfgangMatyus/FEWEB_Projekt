@@ -19,9 +19,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
   },
   {
-    path: '/help',
-    name: 'help',
-    component: () => import(/* webpackChunkName: "help" */ '../views/FAQ.vue'),
+    path: '/faq',
+    name: 'faq',
+    component: () => import(/* webpackChunkName: "faq" */ '../views/FAQ.vue'),
   },
   {
     path: '/imprint',
@@ -32,6 +32,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
   },
   /*{
     path: '/about',
