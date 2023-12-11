@@ -1,52 +1,51 @@
 <template>
     <form @submit.prevent="submitForm">
       <FormField
-        htmlFor="email"
-        label="E-Mail"
-        id="email"
-        type="email"
-        v-model="form.values.email"
-        placeholder="E-Mail"
+        htmlFor="username"
+        label="Username"
+        id="username"
+        type="username"
+        v-model="formData.username"
+        placeholder="Username"
       />
       <FormField
         htmlFor="password"
         label="Password"
         id="password"
         type="password"
-        v-model="form.values.password"
+        v-model="formData.password"
         placeholder="Enter your password"
       />
-      <Button type="submit">Login</Button>
+      <button type="submit">Login</button>
     </form>
   </template>
   
   <script>
-  import FormField from '@/components/molecules/FormField.vue';
-    import Button from '@/components/atoms/Button.vue';
+import { ref } from "vue";
+import FormField from "@/components/molecules/FormField.vue";
   
   export default {
-    name: 'LoginForm',
+   name: "LoginForm",
     components: {
-      FormField,
-      Button,
+      FormField, 
     },
-    data() {
-      return {
-        form: {
-          values: {
-            email: '',
-            password: '',
-          },
-        },
-      };
-    },
-    methods: {
-      submitForm() {
-        // Perform your login logic here using this.formData
-        console.log('Submitting form with data:', this.form.values);
-        // You might want to make an API request to a server for authentication.
-      },
-    },
-  };
+    setup(_, { emit }) {
+    // Reactive properties for form fields
+    const formData = ref({
+      username: "",
+      password: "",
+    });
+
+    const submitForm = () => {
+      // Validate form data and perform any necessary actions
+
+      // Emit a custom event with the form data
+      emit("form-submitted", formData.value);
+    };
+
+    return { formData, submitForm };
+  },
+
+}
   </script>
   

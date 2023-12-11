@@ -12,7 +12,6 @@
 
 <script>
 import { ref } from 'vue';
-
 import RegisterForm from '@/components/molecules/RegisterForm.vue';
 
 export default {
