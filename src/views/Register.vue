@@ -5,7 +5,7 @@
     <hr>
     <!-- call the submit function when clicking enter or wehn clicking the button -->
     <!-- the button needs to be a type submit -->
-  <RegisterForm />
+  <RegisterForm v-model="form.values"/>
   </div>
   </div>
   
