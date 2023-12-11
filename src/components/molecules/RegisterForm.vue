@@ -1,70 +1,93 @@
 <template>
-    <form @submit.prevent="submitForm">
-        <FormField
-        htmlFor="firstname"
-        label="First Name"
-        id="firstname"
-        type="firstname"
-        v-model="form.values.firstname"
-        placeholder="Enter your firstname"
-      />
-      <FormField
-        htmlFor="lastname"
-        label="Last Name"
-        id="lastname"
-        type="lastname"
-        v-model="form.values.lastname"
-        placeholder="Enter your lastname"
-      />
-      <FormField
-        htmlFor="email"
-        label="E-Mail"
-        id="email"
-        type="email"
-        v-model="form.values.email"
-        placeholder="E-Mail"
-      />
-      <FormField
-        htmlFor="password"
-        label="Password"
-        id="password"
-        type="password"
-        v-model="form.values.password"
-        placeholder="Enter your password"
-      />
-      <Button type="submit">Login</Button>
-    </form>
-  </template>
-  
-  <script>
-  import FormField from '@/components/molecules/FormField.vue';
-  import Button from '@/components/atoms/Button.vue';
-  
-  export default {
-    name: 'RegisterForm',
+  <form @submit.prevent="submitForm">
+    <FormField
+      htmlFor="username"
+      label="User Name"
+      id="username"
+      type="username"
+      v-model="form.values.username"
+      placeholder="Enter your username"
+    />
+    <FormField
+      htmlFor="email"
+      label="E-Mail"
+      id="email"
+      type="email"
+      v-model="form.values.email"
+      placeholder="E-Mail"
+    />
+    <FormField
+      htmlFor="password"
+      label="Password"
+      id="password"
+      type="password"
+      v-model="form.values.password"
+      placeholder="Enter your password"
+    />
+    <Button type="submit">Register</Button>
+  </form>
+</template>
+
+<script>
+import { ref } from 'vue';
+import FormField from '@/components/molecules/FormField.vue';
+import Button from '@/components/atoms/Button.vue';
+
+export default {
+  name: 'RegisterForm',
     components: {
       FormField,
       Button,
     },
-    data() {
-      return {
-        form: {
-          values: {
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-          },
-        },
-      };
-    },
-    methods: {
-      submitForm() {
-        // Perform your login logic here using this.formData
-        console.log('Submitting form with data:', this.form.values);
-        // You might want to make an API request to a server for authentication.
+  setup() {
+    // Reactive data
+    const form = ref({
+      values: {
+        username: 'bullshit',
+        email: 'bull@shit.at',
+        password: '123',
       },
-    },
-  };
-  </script>
-  
+    });
+
+    // Function to submit the register form
+    const submitForm = async () => {
+      try {
+        // Your async code to submit the form data
+        // For example, make an API call to register the user
+
+        // Simulate form data (replace with actual form data)
+        const formData = {
+          username: form.value.values.username,
+          email: form.value.values.email,
+          password: form.value.values.password,
+          // ... other form fields
+        };
+
+        // Make API call to register the user
+        const response = await fetch('/api/adduser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          // User registered successfully
+          // Handle success as needed
+        } else {
+          // Handle error response
+          const errorData = await response.json();
+          console.error(`Error: ${errorData.message}`);
+          
+        }
+      } catch (error) {
+        // Handle network or other errors
+        console.error('Error registering user:', error);
+      }
+    };
+
+    return { form, submitForm };
+  },
+};
+</script>

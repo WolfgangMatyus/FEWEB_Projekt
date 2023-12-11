@@ -17,8 +17,7 @@ import Title from "@/components/atoms/Title.vue";
 import RegisterForm from "@/components/molecules/RegisterForm.vue";
 
 const registerSchema = object().shape({
-  firstname: string().required(),
-  lastname: string().required(),
+  username: string().required(),
   email: string().required().email(),
   password: string().required(),
 });
@@ -32,14 +31,12 @@ export default {
       
       form: {
         values: {
-          firstname: "",
-          lastname: "",
+          username: "",
           email: "",
           password: "",
         },
         errors: {
-          firstname: "",
-          lastname: "",
+          username: "",
           email: "",
           password: "",
         },
@@ -76,12 +73,13 @@ export default {
           // if valid
           // reset errors
           this.form.errors = {
-            email: "",
-            password: "",
+            username: "User",
+            email: "user@user.at",
+            password: "user",
           };
 
           // make a post request to the server with the json from this.form.values
-          const response = await fetch("/login", {
+          const response = await fetch("/api/adduser", {
             method: "POST",
             body: JSON.stringify(this.form.values),
           });
