@@ -12,21 +12,25 @@
         <div class="justify-content-center"></div>
       </div>
     </div>
+
+    <RegisterForm @form-submitted="handleFormSubmitted"/>
   </template>
 
   
 <script>
 import Title from "@/components/atoms/Title.vue";
+import RegisterForm from "@/components/molecules/RegisterForm.vue";
 import { useUserStore } from "@/pinia-store/user";
 
 export default {
   name: "Login",
   components: {
     Title,
+    RegisterForm,
   },
   data() {
     return {
-        store: useUserStore(),
+      store: useUserStore(),
       titleType: "h1",
       titleContent: "Management",
     };

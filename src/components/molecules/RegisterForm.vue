@@ -48,6 +48,7 @@
 import { ref } from "vue";
 
 export default {
+  name: "RegisterForm",
   setup(_, { emit }) {
     // Reactive properties for form fields
     const formData = ref({
