@@ -11,8 +11,11 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
         </div>
         <Paragraph v-if="this.store.isLoggedIn">
           <div>
+            <b> Anrede: </b>
+            {{ this.store.gender }}
+          </div>
+          <div>
             <b> Name: </b>
-          
             {{ this.store.username }}
           </div>
           <div>

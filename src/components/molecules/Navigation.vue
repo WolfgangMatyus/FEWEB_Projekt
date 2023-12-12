@@ -8,7 +8,7 @@
     <router-link v-if="!isUserLoggedIn" class="nav-link" to="/register">Register</router-link>
     <router-link v-if="adminRole === this.store.role" class="nav-link" to="/management">Management</router-link>
     <div v-if="isUserLoggedIn">
-      Welcome, {{ username }} !
+      Welcome, {{this.store.gender}} {{ username }} !
     </div>
 </template>
 
@@ -33,7 +33,6 @@ export default {
   methods: {
     getUser() {
       this.username = localStorage.getItem("username");
-
     },
   },
 };

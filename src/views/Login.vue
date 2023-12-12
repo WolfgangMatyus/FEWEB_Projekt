@@ -67,7 +67,7 @@ export default {
           localStorage.setItem("access_token", token);
           localStorage.setItem("isLoggedIn", isLoggedIn);
           localStorage.setItem("username", formData.username);
-          localStorage.setItem("role", data.role);
+
 
           window.location.href = "/profile";
         } else {

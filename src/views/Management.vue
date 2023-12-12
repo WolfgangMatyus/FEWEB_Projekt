@@ -10,7 +10,7 @@
       <form @submit.prevent="handleSubmit">
         <label for="email">Email:</label>
         <input type="email" id="email" v-model="formData.email">
-        <Button @click="this.store.deleteFunction" type="submit">Delete</Button>
+        <Button type="submit">Delete</Button>
       </form>
       <div class="justify-content-center"></div>
     </div>
