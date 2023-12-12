@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid p-5 text-center">
-    <nav class="">
+  <div class="container-fluid text-center">
+    <nav>
       <Navigation />
       <hr>
     </nav>

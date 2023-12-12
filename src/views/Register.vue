@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <h2>Registrierung</h2>
-    <RegisterForm @form-submitted="handleFormSubmitted" />
-    <div v-if="registeredUser">
-      <h3>Registered User:</h3>
-      <p>Gender: {{ registeredUser.gender }}</p>
-      <p>Username: {{ registeredUser.username }}</p>
-      <p>Email: {{ registeredUser.email }}</p>
-    </div>
+  <div class="container">
+    <h1>Registrierung</h1>
+    <hr>
+      <RegisterForm @form-submitted="handleFormSubmitted" />
+      <div v-if="registeredUser">
+        <h3>Registered User:</h3>
+        <p>Gender: {{ registeredUser.gender }}</p>
+        <p>Username: {{ registeredUser.username }}</p>
+        <p>Email: {{ registeredUser.email }}</p>
+      </div>
   </div>
 </template>
 
