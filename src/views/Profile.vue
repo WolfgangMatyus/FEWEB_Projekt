@@ -4,8 +4,8 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
       <div>
-        <button @click="this.store.user">Userdetails</button>
-        <button @click="this.store.update">Update</button>
+        <Button @click="this.store.user">Userdetails</Button>
+        <Button @click="this.store.update">Update</Button>
         <div>
           {{ this.store.token }}
         </div>
@@ -36,12 +36,14 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
 import { useUserStore } from "@/pinia-store/user";
+import Button from "@/components/atoms/Button.vue";
 
 export default {
   name: "Profile",
   components: {
     Title,
     Paragraph,
+    Button,
   },
 
   data() {

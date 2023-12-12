@@ -74,6 +74,27 @@ export default {
           // API call failed, handle error
           console.error("API call failed:", response.statusText);
         }
+        const apiUrl2 = "/api/user/" + formData.username;
+        const accessToken = localStorage.getItem("access_token");
+        const response2 = await fetch(apiUrl2, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        const data = await response2.json();
+        //const firstRow = data.user[0];
+        //const usersArray = data.users;
+
+        this.email = data.email;
+        this.username = data.username;
+        this.role = data.role;
+
+
+
+        
       } catch (error) {
         // Handle other errors (e.g., network error)
         console.error("Error submitting form:", error);

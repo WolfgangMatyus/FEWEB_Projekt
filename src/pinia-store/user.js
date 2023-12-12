@@ -90,11 +90,13 @@ export const useUserStore = defineStore("user", {
     async update() {
       try {
         const apiUrl = "/api/user/";
-    
+        const accessToken = localStorage.getItem('access_token');
+
         const response = await fetch(apiUrl, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
             username: '',
@@ -110,6 +112,32 @@ export const useUserStore = defineStore("user", {
         console.error("Error during login:", error);
         throw error;
       }
+    }
+  },
+  async deleteFunction(emailToDelete) {
+    try {
+      const apiUrl = "/api/user/" + emailToDelete;
+      const accessToken = localStorage.getItem('access_token');
+  
+      const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          username: '',
+          email: '',
+          password: '',
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }    
+    } catch (error) {
+      console.error("Error during delete:", error);
+      throw error;
     }
   },
   
