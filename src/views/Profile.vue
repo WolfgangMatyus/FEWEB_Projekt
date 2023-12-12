@@ -4,17 +4,24 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
       <div>
-        <button @click="this.store.login">login</button>
         <button @click="this.store.user">user</button>
         <button @click="this.store.update">update</button>
         <div>
           {{ this.store.token }}
         </div>
         <Paragraph v-if="this.store.isLoggedIn">
-          <b> Name: </b>
           <div>
+            <b> Name: </b>
+          
             {{ this.store.username }}
+          </div>
+          <div>
+            <b> Email: </b>
             {{ this.store.email }}
+          </div>
+          <div>
+            <b> Role: </b>
+            {{ this.store.role }}
           </div>
         </Paragraph>
       </div>
