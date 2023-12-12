@@ -4,6 +4,7 @@
     <RegisterForm @form-submitted="handleFormSubmitted" />
     <div v-if="registeredUser">
       <h3>Registered User:</h3>
+      <p>Gender: {{ registeredUser.gender }}</p>
       <p>Username: {{ registeredUser.username }}</p>
       <p>Email: {{ registeredUser.email }}</p>
     </div>

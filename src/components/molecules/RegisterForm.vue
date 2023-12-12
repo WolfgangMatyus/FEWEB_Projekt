@@ -1,5 +1,9 @@
 <template>
   <form @submit.prevent="submitForm">
+    <label for="username">Gender:</label>
+    <br />
+    <input v-model="formData.gender" type="text" id="gender" />
+    <br />
     <label for="username">Username:</label>
     <br />
     <input v-model="formData.username" type="text" id="username" />
