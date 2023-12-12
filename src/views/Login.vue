@@ -16,6 +16,7 @@
 import { ref } from "vue";
 import LoginForm from "@/components/molecules/LoginForm.vue";
 import Title from "@/components/atoms/Title.vue";
+import { useUserStore } from "@/pinia-store/user";
 
 export default {
   name: "Login",
@@ -25,8 +26,10 @@ export default {
   },
   data() {
     return {
+      store: useUserStore(),
       titleType: "h1",
       titleContent: "Login",
+      adminRole: "ROLE_ADMIN",
     };
   },
   setup() {
@@ -59,11 +62,13 @@ export default {
           const data = await response.json();
           const { token } = data;
 
+
           // Store the JWT token in the state
           localStorage.setItem("access_token", token);
           localStorage.setItem("isLoggedIn", isLoggedIn);
           localStorage.setItem("username", formData.username);
           localStorage.setItem("role", data.role);
+
           window.location.href = "/profile";
         } else {
           // API call failed, handle error

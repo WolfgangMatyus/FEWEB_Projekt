@@ -15,6 +15,10 @@
     <router-link v-if="!isUserLoggedIn" class="nav-link" to="/register"
       >Register</router-link
     >
+    <router-link v-if="adminRole === this.store.role" class="nav-link" to="/management"
+      >Management</router-link
+      >
+
     <div v-if="isUserLoggedIn">
       Welcome, {{ username }} !
     </div>
@@ -22,13 +26,18 @@
 </template>
 
 <script>
+import { useUserStore } from "@/pinia-store/user";
+
+
 export default {
   name: "Navigation",
   props: ['usernameProp'],
   data() {
     return {
+      store: useUserStore(),
       isUserLoggedIn: localStorage.getItem("isLoggedIn"),
       username: this.usernameProp,
+      adminRole: "ROLE_ADMIN",
     };
   },
   mounted() {
@@ -37,6 +46,7 @@ export default {
   methods: {
     getUser() {
       this.username = localStorage.getItem("username");
+
     },
   },
 };

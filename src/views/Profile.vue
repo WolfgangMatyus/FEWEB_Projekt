@@ -4,8 +4,8 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
       <div>
-        <button @click="this.store.user">user</button>
-        <button @click="this.store.update">update</button>
+        <button @click="this.store.user">Userdetails</button>
+        <button @click="this.store.update">Update</button>
         <div>
           {{ this.store.token }}
         </div>
