@@ -81,6 +81,30 @@ export const useUserStore = defineStore("user", {
         console.error("Error during login:", error);
         throw error;
       }
+    },
+    async update() {
+      try {
+        const apiUrl = "/api/user/31000000-0000-0000-0000-000000000000";
+    
+        const response = await fetch(apiUrl, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: 'bull',
+            email: 'bull@bull.com',
+            password: '123',
+          }),
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }    
+      } catch (error) {
+        console.error("Error during login:", error);
+        throw error;
+      }
     }
   },
 });

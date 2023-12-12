@@ -6,6 +6,7 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
       <div>
         <button @click="this.store.login">login</button>
         <button @click="this.store.user">user</button>
+        <button @click="this.store.update">update</button>
         <div>
           {{ this.store.token }}
         </div>
