@@ -7,6 +7,7 @@ export const useUserStore = defineStore("user", {
       email: "",
       username: "",
       token: "",
+      role: "",
     };
   },
   getters: {
@@ -20,8 +21,12 @@ export const useUserStore = defineStore("user", {
     },
     async user() {
       try {
-        const apiUrl = "/api/users";
+        const username = localStorage.getItem('username');
+
+        const apiUrl = "/api/user/" + username;
         const accessToken = localStorage.getItem('access_token');
+        const role = localStorage.getItem('role');
+        console.log(accessToken);
     
         const response = await fetch(apiUrl, {
           method: "GET",
@@ -37,14 +42,14 @@ export const useUserStore = defineStore("user", {
     
         const data = await response.json();
         //const firstRow = data.user[0];
-        const usersArray = data._embedded.users;
-        //console.log(data);
-        console.log(usersArray);
-        const firstUser = usersArray[0];
-        console.log(firstUser);
+        //const usersArray = data.users;
+        console.log(data);
+        console.log(username);
+        console.log(role);
 
-        this.email = firstUser.email;
-        this.username = firstUser.username;
+        this.email = data.email;
+        this.username = data.username;
+        this.role = data.role;
         
       } catch (error) {
         console.error("Error during login:", error);
@@ -62,8 +67,8 @@ export const useUserStore = defineStore("user", {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: 'robert',
-            password: '123',
+            username: '',
+            password: '',
           }),
         });
     
@@ -84,7 +89,7 @@ export const useUserStore = defineStore("user", {
     },
     async update() {
       try {
-        const apiUrl = "/api/user/31000000-0000-0000-0000-000000000000";
+        const apiUrl = "/api/user/";
     
         const response = await fetch(apiUrl, {
           method: "PATCH",
@@ -92,9 +97,9 @@ export const useUserStore = defineStore("user", {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: 'bull',
-            email: 'bull@bull.com',
-            password: '123',
+            username: '',
+            email: '',
+            password: '',
           }),
         });
     
@@ -107,4 +112,5 @@ export const useUserStore = defineStore("user", {
       }
     }
   },
+  
 });

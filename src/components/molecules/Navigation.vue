@@ -7,23 +7,27 @@
     <router-link v-if="!isUserLoggedIn" class="nav-link" to="/login">Login</router-link>
     <router-link v-if="!isUserLoggedIn" class="nav-link" to="/register">Register</router-link>
     <div v-if="isUserLoggedIn">
-      Welcome, User!
+      Welcome, {{ username }} !
     </div>
 </template>
 
 <script>
-//import { useUserStore } from "@/pinia-store/user";
-
 export default {
   name: "Navigation",
+  props: ['usernameProp'],
   data() {
     return {
       isUserLoggedIn: localStorage.getItem("isLoggedIn"),
+      username: this.usernameProp,
     };
   },
-  mounted: async function () {
-    console.log("mounted navigation");
-    console.log(this.store);
+  mounted() {
+    this.getUser();
+  },
+  methods: {
+    getUser() {
+      this.username = localStorage.getItem("username");
+    },
   },
 };
 </script>

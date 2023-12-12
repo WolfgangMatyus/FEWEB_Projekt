@@ -62,6 +62,8 @@ export default {
           // Store the JWT token in the state
           localStorage.setItem("access_token", token);
           localStorage.setItem("isLoggedIn", isLoggedIn);
+          localStorage.setItem("username", formData.username);
+          localStorage.setItem("role", data.role);
           window.location.href = "/profile";
         } else {
           // API call failed, handle error
