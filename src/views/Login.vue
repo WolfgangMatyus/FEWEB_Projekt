@@ -13,12 +13,12 @@
 </template>
 
 <script>
-
 import { ref } from "vue";
 import { object, string } from 'yup';
 import Title from '@/components/atoms/Title.vue';
 import LoginForm from '@/components/molecules/LoginForm.vue';
 import { useUserStore } from '@/pinia-store/user';
+import { validateForm, loginUser, getUserDetails } from '@/services/authService';
 
 const loginSchema = object().shape({
   email: string().required().email('Invalid email address'),
@@ -30,14 +30,13 @@ export default {
   components: {
     LoginForm,
     Title,
-
   },
   data() {
     return {
       store: useUserStore(),
       titleType: "h1",
       titleContent: "Login",
-       form: {
+      form: {
         values: {
           email: '',
           password: '',
@@ -48,80 +47,41 @@ export default {
         },
       },
       adminRole: "ROLE_ADMIN",
-
     };
   },
   setup() {
     const registeredUser = ref(null);
 
     const handleFormSubmitted = async (formData) => {
-      console.log("Form data received:", formData);
       try {
-        // Überprüfe, ob formData Werte für username und password enthält
-        if (!formData.username || !formData.password) {
-          console.error("Username and password are required.");
-          return;
-        }
+        // Validate form data
+        const isValid = await validateForm(formData, loginSchema);
+        if (!isValid) return;
 
-        // Your API call code here
-        const response = await fetch("/api/auth/token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        // Login user and get access token
+        const token = await loginUser(formData);
 
-        console.log(response);
+        // Store the JWT token in the state
+        localStorage.setItem("access_token", token);
 
-        if (response.ok) {
-          const isLoggedIn = true;
-          // API call succeeded, handle success
-          registeredUser.value = formData;
-          const data = await response.json();
-          const { token } = data;
+        // Fetch user details
+        const user = await getUserDetails(formData.username, token);
 
+        // Store user details in the state
+        this.email = user.email;
+        this.username = user.username;
+        this.role = user.role;
 
-          // Store the JWT token in the state
-          localStorage.setItem("access_token", token);
-          localStorage.setItem("isLoggedIn", isLoggedIn);
-          localStorage.setItem("username", formData.username);
-
-
-          window.location.href = "/profile";
-        } else {
-          // API call failed, handle error
-          console.error("API call failed:", response.statusText);
-        }
-        const apiUrl2 = "/api/user/" + formData.username;
-        const accessToken = localStorage.getItem("access_token");
-        const response2 = await fetch(apiUrl2, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        const data = await response2.json();
-        //const firstRow = data.user[0];
-        //const usersArray = data.users;
-
-        this.email = data.email;
-        this.username = data.username;
-        this.role = data.role;
-
-
-
-        
+        // Redirect to profile page
+        window.location.href = "/profile";
       } catch (error) {
-        // Handle other errors (e.g., network error)
+        // Handle errors
         console.error("Error submitting form:", error);
+        // Update form errors or show a general error message to the user
       }
-      console.log(localStorage.getItem("access_token"));
     };
+
     return { registeredUser, handleFormSubmitted };
-   
   },
 };
 </script>

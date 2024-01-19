@@ -15,7 +15,8 @@
       <div class="justify-content-center"></div>
     </div>
     <RegisterForm @form-submitted="handleFormSubmitted"/>
-  </template>
+  </div>
+</template>
 
 <script>
 import Title from "@/components/atoms/Title.vue";
