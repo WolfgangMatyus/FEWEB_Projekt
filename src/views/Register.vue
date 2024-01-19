@@ -19,18 +19,18 @@ import { ref } from "vue";
 import RegisterForm from "@/components/molecules/RegisterForm.vue";
 
 export default {
-
+  name: 'Register',
   components: {
     RegisterForm,
-
-  name: 'Register',
-  data() {
-    return {
-      titleType: 'h2',
-      titleContent: 'Registrieren',      
-    };
-
-  },
+    },
+    
+  data(){
+      return {
+        titleType: 'h2',
+        titleContent: 'Registrieren',      
+      };
+    },
+    
   setup() {
     const registeredUser = ref(null);
 
@@ -58,6 +58,7 @@ export default {
       }
     };
     return { registeredUser, handleFormSubmitted };
-  },
+  }
 };
+
 </script>
