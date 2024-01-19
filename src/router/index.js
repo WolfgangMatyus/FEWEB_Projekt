@@ -42,6 +42,7 @@ const routes = [
     path: '/management',
     name: 'management',
     component: () => import(/* webpackChunkName: "management" */ '../views/Management.vue'),
+
   },
   /*{
     path: '/about',

@@ -6,11 +6,9 @@
       <div>
         <Paragraph>{{ subtitleContent }}</Paragraph>
       </div>
-
       <div class="row">
         <Card v-for="(card, index) in cards" :key="index" :cardData="card" :class="ClassStyle"/>
       </div>
-
     </div>
   </div>
 </template>
@@ -19,6 +17,7 @@
 import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
 import Card from "@/components/organism/Card.vue";
+import { useUserStore } from '@/pinia-store/user';
 
 export default {
   name: "Home",
@@ -29,6 +28,7 @@ export default {
   },
   data() {
     return {
+      store: useUserStore(),
       titleType: 'h1',
       titleContent: 'Willkommen auf unserer Auktionsplattform',
       subtitleContent: 'Hier sehen Sie unsere neuesten Objekte:',

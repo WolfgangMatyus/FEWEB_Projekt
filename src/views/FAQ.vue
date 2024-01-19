@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="login">
+    <div class="faq">
       <Title :type="titleType">{{ titleContent }}</Title>
       <hr>
      <div>
@@ -31,7 +31,7 @@
   import Paragraph from "@/components/atoms/Paragraph.vue";
 
   export default {
-    name: "Help",
+    name: "faq",
     components: {
       Title,
       Paragraph,

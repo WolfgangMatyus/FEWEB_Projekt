@@ -13,23 +13,42 @@
 </template>
 
 <script>
+
 import { ref } from "vue";
-import LoginForm from "@/components/molecules/LoginForm.vue";
-import Title from "@/components/atoms/Title.vue";
-import { useUserStore } from "@/pinia-store/user";
+import { object, string } from 'yup';
+import Title from '@/components/atoms/Title.vue';
+import LoginForm from '@/components/molecules/LoginForm.vue';
+import { useUserStore } from '@/pinia-store/user';
+
+const loginSchema = object().shape({
+  email: string().required().email('Invalid email address'),
+  password: string().required(),
+});
 
 export default {
   name: "Login",
   components: {
     LoginForm,
     Title,
+
   },
   data() {
     return {
       store: useUserStore(),
       titleType: "h1",
       titleContent: "Login",
+       form: {
+        values: {
+          email: '',
+          password: '',
+        },
+        errors: {
+          email: '',
+          password: '',
+        },
+      },
       adminRole: "ROLE_ADMIN",
+
     };
   },
   setup() {

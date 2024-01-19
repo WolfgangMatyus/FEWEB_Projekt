@@ -1,4 +1,5 @@
 import Paragraph from '@/components/atoms/Paragraph.vue';
+
 <template>
   <div class="container">
     <div class="Profile">
@@ -31,6 +32,7 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
       <UpdateForm @form-submitted="handleFormSubmitted" />
 
       <hr />
+
       <Paragraph>{{ ParagraphContent }}</Paragraph>
     </div>
   </div>
@@ -46,7 +48,7 @@ import { ref } from "vue";
 
 
 export default {
-  name: "Profile",
+  name: 'Profile',
   components: {
     Title,
     Paragraph,

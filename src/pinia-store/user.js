@@ -56,6 +56,7 @@ export const useUserStore = defineStore("user", {
         console.error("Error during login:", error);
         throw error;
       }
+
     },
     
     async login() {

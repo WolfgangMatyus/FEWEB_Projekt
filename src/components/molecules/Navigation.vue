@@ -45,6 +45,7 @@ export default {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 2rem;
   padding: 1rem;
+
 }
 
 .nav-link:hover {

@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1>Registrierung</h1>
+      <Title :type="titleType">{{ titleContent }}</Title>
     <hr />
     <RegisterForm @form-submitted="handleFormSubmitted" />
     <div v-if="registeredUser">
@@ -9,6 +10,7 @@
       <p>Username: {{ registeredUser.username }}</p>
       <p>Email: {{ registeredUser.email }}</p>
     </div>
+
   </div>
 </template>
 
@@ -17,8 +19,17 @@ import { ref } from "vue";
 import RegisterForm from "@/components/molecules/RegisterForm.vue";
 
 export default {
+
   components: {
     RegisterForm,
+
+  name: 'Register',
+  data() {
+    return {
+      titleType: 'h2',
+      titleContent: 'Registrieren',      
+    };
+
   },
   setup() {
     const registeredUser = ref(null);
