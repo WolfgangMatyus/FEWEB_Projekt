@@ -1,9 +1,11 @@
 <template>
+
   <div class="container-fluid text-center">
     <nav>
       <Navigation />
       <hr>
     </nav>
+
   </div>
   <router-view />
 </template>
@@ -18,3 +20,4 @@ export default {
   },
 }
 </script>
+

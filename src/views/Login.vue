@@ -13,23 +13,42 @@
 </template>
 
 <script>
+
 import { ref } from "vue";
-import LoginForm from "@/components/molecules/LoginForm.vue";
-import Title from "@/components/atoms/Title.vue";
-import { useUserStore } from "@/pinia-store/user";
+import { object, string } from 'yup';
+import Title from '@/components/atoms/Title.vue';
+import LoginForm from '@/components/molecules/LoginForm.vue';
+import { useUserStore } from '@/pinia-store/user';
+
+const loginSchema = object().shape({
+  email: string().required().email('Invalid email address'),
+  password: string().required(),
+});
 
 export default {
   name: "Login",
   components: {
     LoginForm,
     Title,
+
   },
   data() {
     return {
       store: useUserStore(),
       titleType: "h1",
       titleContent: "Login",
+       form: {
+        values: {
+          email: '',
+          password: '',
+        },
+        errors: {
+          email: '',
+          password: '',
+        },
+      },
       adminRole: "ROLE_ADMIN",
+
     };
   },
   setup() {
@@ -67,13 +86,34 @@ export default {
           localStorage.setItem("access_token", token);
           localStorage.setItem("isLoggedIn", isLoggedIn);
           localStorage.setItem("username", formData.username);
-          localStorage.setItem("role", data.role);
+
 
           window.location.href = "/profile";
         } else {
           // API call failed, handle error
           console.error("API call failed:", response.statusText);
         }
+        const apiUrl2 = "/api/user/" + formData.username;
+        const accessToken = localStorage.getItem("access_token");
+        const response2 = await fetch(apiUrl2, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        const data = await response2.json();
+        //const firstRow = data.user[0];
+        //const usersArray = data.users;
+
+        this.email = data.email;
+        this.username = data.username;
+        this.role = data.role;
+
+
+
+        
       } catch (error) {
         // Handle other errors (e.g., network error)
         console.error("Error submitting form:", error);
