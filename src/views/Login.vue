@@ -3,15 +3,18 @@
   <div class="container">
     <div class="login">
       <Title :type="titleType">{{ titleContent }}</Title>
-      <hr>
+      <hr />
       <!-- call the submit function when clicking enter or when clicking the button -->
       <!-- the button needs to be a type submit -->
-    <LoginForm />
+      <div class="justify-content-center"></div>
+      <LoginForm @form-submitted="handleFormSubmitted" />
     </div>
-</div>
+  </div>
 </template>
 
 <script>
+
+import { ref } from "vue";
 import { object, string } from 'yup';
 import Title from '@/components/atoms/Title.vue';
 import LoginForm from '@/components/molecules/LoginForm.vue';
@@ -23,17 +26,18 @@ const loginSchema = object().shape({
 });
 
 export default {
+  name: "Login",
   components: {
-    Title,
     LoginForm,
+    Title,
+
   },
-  name: 'Login',
   data() {
     return {
       store: useUserStore(),
-      titleType: 'h1',
-      titleContent: 'Login',
-      form: {
+      titleType: "h1",
+      titleContent: "Login",
+       form: {
         values: {
           email: '',
           password: '',
@@ -43,77 +47,81 @@ export default {
           password: '',
         },
       },
+      adminRole: "ROLE_ADMIN",
+
     };
   },
-  methods: {
-    // field => 'email' or 'password'
-    validate(field) {
-      // promise format
-      // validate the field (email or password) form the data (this.form.values)
-      loginSchema
-        .validateAt(field, this.form.values)
-        .then(() => {
-          // if everything works
-          // remove all errors from the field (this.form.errors['email' or 'password'])
-          this.form.errors[field] = '';
-        })
-        .catch((err) => {
-          console.log(err);
-          // if error
-          // add the error message from the field (this.form.errors['email' or 'password'])
-          // this will be displayed in the form under the input see v-if
-          this.form.errors[field] = err.message;
-        });
-    },
-    async submit() {
-      // => { email: '', password: '' }
-      loginSchema
-        .validate(this.form.values, {
-          abortEarly: false,
-        })
-        .then(async () => {
-          // if valid
-          // reset errors
-          this.form.errors = {
-            email: '',
-            password: '',
-          };
-          this.store.login(this.form.values);
-          //// make a post request to the server with the json from this.form.values
-          //const response = await fetch('/login', {
-          //  method: 'POST',
-          //  body: JSON.stringify(this.form.values),
-          //});
-          //// get the response from the server
-          //const data = await response.json();
+  setup() {
+    const registeredUser = ref(null);
 
-          // // get the token from the data from the server
-          // const token = data.accessToken;
-          // // save the token in the browser for reuse
-          // // e.g. for making requests to the servers private resources
-          // // e.g. update user, delete user...
-          // // persisted after the browser window is closed
-          //  localStorage.setItem('token', token);
-          // // removed after the browser window ist closed
-          // // sessionStorage.setItem('token', token);
-          // // JWT - JSON Web Token
-          // // token => "y.x.z"
-          // // y => header -> base64 of the following { alg: "",  }
-          // // x => payload -> where the data is stored
-          // // z => signature -> is an encrypted version of the header and payload
-        })
-        .catch((err) => {
-          console.log('err sddf');
-          console.log(err);
-          // if error
-          if (err.inner) {
-            // set error message
-            err.inner.forEach((error) => {
-              this.form.errors[error.path] = error.message;
-            });
-          }
+    const handleFormSubmitted = async (formData) => {
+      console.log("Form data received:", formData);
+      try {
+        // Überprüfe, ob formData Werte für username und password enthält
+        if (!formData.username || !formData.password) {
+          console.error("Username and password are required.");
+          return;
+        }
+
+        // Your API call code here
+        const response = await fetch("/api/auth/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         });
-    },
+
+        console.log(response);
+
+        if (response.ok) {
+          const isLoggedIn = true;
+          // API call succeeded, handle success
+          registeredUser.value = formData;
+          const data = await response.json();
+          const { token } = data;
+
+
+          // Store the JWT token in the state
+          localStorage.setItem("access_token", token);
+          localStorage.setItem("isLoggedIn", isLoggedIn);
+          localStorage.setItem("username", formData.username);
+
+
+          window.location.href = "/profile";
+        } else {
+          // API call failed, handle error
+          console.error("API call failed:", response.statusText);
+        }
+        const apiUrl2 = "/api/user/" + formData.username;
+        const accessToken = localStorage.getItem("access_token");
+        const response2 = await fetch(apiUrl2, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        const data = await response2.json();
+        //const firstRow = data.user[0];
+        //const usersArray = data.users;
+
+        this.email = data.email;
+        this.username = data.username;
+        this.role = data.role;
+
+
+
+        
+      } catch (error) {
+        // Handle other errors (e.g., network error)
+        console.error("Error submitting form:", error);
+      }
+      console.log(localStorage.getItem("access_token"));
+    };
+    return { registeredUser, handleFormSubmitted };
+   
   },
 };
 </script>

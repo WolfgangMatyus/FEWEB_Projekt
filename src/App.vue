@@ -1,6 +1,11 @@
 <template>
-  <div class="container-fluid p-5 text-center">
+
+  <div class="container-fluid text-center">
+    <nav>
       <Navigation />
+      <hr>
+    </nav>
+
   </div>
   <router-view />
 </template>

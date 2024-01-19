@@ -33,6 +33,17 @@ const routes = [
     name: 'profile',
     component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
   },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
+  },
+  {
+    path: '/management',
+    name: 'management',
+    component: () => import(/* webpackChunkName: "management" */ '../views/Management.vue'),
+
+  },
   /*{
     path: '/about',
     name: 'about',

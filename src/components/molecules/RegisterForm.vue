@@ -1,89 +1,72 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <FormField
-      htmlFor="username"
-      label="User Name"
-      id="username"
-      type="username"
-      v-model="form.values.username"
-      placeholder="Enter your username"
-    />
-    <FormField
-      htmlFor="email"
-      label="E-Mail"
-      id="email"
-      type="email"
-      v-model="form.values.email"
-      placeholder="E-Mail"
-    />
-    <FormField
-      htmlFor="password"
-      label="Password"
-      id="password"
-      type="password"
-      v-model="form.values.password"
-      placeholder="Enter your password"
-    />
-    <Button type="submit">Register</Button>
-  </form>
+    <form @submit.prevent="submitForm">
+
+      <label for="username">Gender:</label>
+      <br />
+      <div>
+        <label>
+          <input type="radio" v-model="formData.gender" name="picGender" value="Herr"> Männlich
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="radio" v-model="formData.gender" name="picGender" value="Frau"> Weiblich
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="radio" v-model="formData.selectedGender" name="picGender" value="diverse"> Divers
+        </label>
+
+        <div v-if="formData.selectedGender === 'diverse'">
+          <label>
+            Divers Details:
+            <input v-model="formData.gender" type="text" id="gender" />
+          </label>
+        </div>
+      </div>
+
+
+      <label for="username">Username:</label>
+      <br />
+      <input v-model="formData.username" type="text" id="username" />
+      <br />
+      <label for="email">Email:</label>
+      <br />
+      <input v-model="formData.email" type="email" id="email" />
+      <br />
+      <label for="password">Password:</label>
+      <br />
+      <input v-model="formData.password" type="password" id="password" />
+      <br />
+      <button type="submit">Register</button>
+    </form>
 </template>
 
 <script>
-import { ref, watch } from 'vue';
-import FormField from '@/components/molecules/FormField.vue';
-import Button from '@/components/atoms/Button.vue';
+import { ref } from "vue";
 
 export default {
-  name: 'RegisterForm',
-    components: {
-      FormField,
-      Button,
-    },
+  name: "RegisterForm",
+  setup(_, { emit }) {
+    // Reactive properties for form fields
 
-    props: {
-      modelValue: {
-      type: Object,
-      required: true,
-    },
-  },
-  setup(props) {
-    // Reactive data
-    const form = ref({ ...props.modelValue});
+    const formData = ref({
+      username: "",
+      email: "",
+      password: "",
+      gender: "",
+    });
 
-    watch(() => props.modelValue, (newValue) => {
-      form.value = { ...newValue };
-});
-    // Function to submit the register form
-    const submitForm = async () => {
-      try {
-        // Your async code to submit the form data
-        // For example, make an API call to register the user
-
-        // Make API call to register the user
-        const response = await fetch('/api/adduser', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form.value.values),
-        });
-
-        if (response.ok) {
-          // User registered successfully
-          // Handle success as needed
-        } else {
-          // Handle error response
-          const errorData = await response.json();
-          console.error(`Error: ${errorData.message}`);
-          
-        }
-      } catch (error) {
-        // Handle network or other errors
-        console.error('Error registering user:', error);
-      }
+    const submitForm = () => {
+      // Validate form data and perform any necessary actions
+      console.log("Form data before emit:", formData.value);
+      // Emit a custom event with the form data
+      emit("form-submitted", formData.value);
     };
 
-    return { form, submitForm };
+    return { formData, submitForm };
+
   },
 };
 </script>
