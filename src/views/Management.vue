@@ -14,10 +14,12 @@
       </form>
       <div class="justify-content-center"></div>
     </div>
-  </div>
-</template>
+    <RegisterForm @form-submitted="handleFormSubmitted"/>
+  </template>
+
 <script>
 import Title from "@/components/atoms/Title.vue";
+import RegisterForm from "@/components/molecules/RegisterForm.vue";
 import { useUserStore } from "@/pinia-store/user";
 import Button from "@/components/atoms/Button.vue";
 
@@ -25,7 +27,11 @@ export default {
   name: "Management",
   components: {
     Title,
+
+    RegisterForm,
+
     Button,
+
   },
   data() {
     return {
