@@ -58,11 +58,6 @@ export default {
 
     const handleFormSubmitted = async (formData) => {
       try {
-
-
-      // Access the email property in the payload
-
-        
         const accessToken = localStorage.getItem('access_token');
         
         // Your API call code here
