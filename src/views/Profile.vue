@@ -26,6 +26,11 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
             <b> Role: </b>
             {{ this.store.role }}
           </div>
+          <input type="text" v-model="this.store.username" />
+          <input type="text" v-model="this.store.email" />
+          <input type="text" v-model="this.store.gender" />
+          <input type="text" v-model="this.store.role" />
+          <Button @click="this.store.user">Update Userdetails</Button>
         </Paragraph>
       </div>
       <UpdateForm @form-submitted="handleFormSubmitted" />
@@ -59,10 +64,6 @@ export default {
     const handleFormSubmitted = async (formData) => {
       try {
 
-
-      // Access the email property in the payload
-
-        
         const accessToken = localStorage.getItem('access_token');
         
         // Your API call code here
