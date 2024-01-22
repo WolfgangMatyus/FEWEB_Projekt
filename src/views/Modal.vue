@@ -1,50 +1,50 @@
 <!-- Modal.vue -->
 <template>
-    <div class="modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <Title :type="titleType" :text="title">{{ title }}</Title>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <Paragraph :text="errormessage">{{ errormessage }}</Paragraph>
-        </div>
-        <div class="modal-footer">
-          <Button :text="buttonText" @button-click="onButtonClick" :class="ClassStyleBtn">{{ buttonText }}</Button>
-        </div>
-      </div>
+  <div class="modal" v-if="showModal">
+    <div class="modal-content">
+      <p>hi</p>
+      <slot></slot>
+      <button @click="closeModal">Close Modal</button>
     </div>
   </div>
 </template>
 
 <script>
-import Button from '@/components/atoms/Button.vue';
-import Title from '@/components/atoms/Title.vue';
-import Paragraph from '@/components/atoms/Paragraph.vue';
+let isExported = true;
 
-export default {
-  name: 'Modal',
-  data() {
-    return {
-      titleType: 'h2',
-      titleContent: 'ERROR',
+export default isExported
+  ? {
+      data() {
+        return {
+          showModal: true,
+        };
+      },
+      methods: {
+        closeModal() {
+          this.showModal = false;
+        },
+      },
     }
-  },
-  components: {
-      Button,
-      Title,
-      Paragraph
-    },
-
-  props: {
-    show: Boolean,
-    title: String,
-    errormessage: String,
-    buttonText: String,
-  },
-}
+  : null;
 </script>
 
+<style scoped>
+/* Add your modal styling here */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+</style>
