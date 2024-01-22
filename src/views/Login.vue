@@ -31,7 +31,10 @@ export default {
     Title,
     Modal,
   },
+
   setup() {
+    const titleType = "h1";
+    const titleContent = "Login";
     const registeredUser = ref(null);
     const showModal = ref(false);
 
@@ -120,6 +123,8 @@ export default {
       showModal,
       openModal,
       closeModal,
+      titleType,
+      titleContent,
     };
   },
 };
