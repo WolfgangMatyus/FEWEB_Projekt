@@ -2,8 +2,8 @@
   <div class="container">
     <div class="Imprint">
       <Title :type="titleType">{{ titleContent }}</Title>
-    <hr>
-    <div>
+      <hr />
+      <div>
         <Title type="h2">Angaben gemäß § 5 ECG</Title>
         <Paragraph>
           Max Mustermann<br />
@@ -16,10 +16,9 @@
           Telefax: 1234-56789<br />
           E-Mail: max@musterperson.at
         </Paragraph>
+      </div>
     </div>
   </div>
-  </div>
- 
 </template>
 
 <script>
@@ -35,8 +34,8 @@ export default {
 
   data() {
     return {
-      titleType: 'h1',
-      titleContent: 'Imprint',
+      titleType: "h1",
+      titleContent: "Imprint",
     };
   },
 };
