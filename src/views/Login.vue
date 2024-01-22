@@ -40,6 +40,7 @@ export default {
       try {
         // Überprüfe, ob formData Werte für username und password enthält
         if (!formData.username || !formData.password) {
+
           showModal.value = true;
           console.error("Username and password are required.");
           return;
@@ -67,7 +68,7 @@ export default {
           localStorage.setItem("access_token", token);
           localStorage.setItem("isLoggedIn", isLoggedIn);
           localStorage.setItem("username", formData.username);
-          localStorage.setItem("role", data.role);
+
 
           window.location.href = "/profile";
         } else {
@@ -75,6 +76,27 @@ export default {
           showModal.value = true;
           console.error("API call failed:", response.statusText);
         }
+        const apiUrl2 = "/api/user/" + formData.username;
+        const accessToken = localStorage.getItem("access_token");
+        const response2 = await fetch(apiUrl2, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        const data = await response2.json();
+        //const firstRow = data.user[0];
+        //const usersArray = data.users;
+
+        this.email = data.email;
+        this.username = data.username;
+        this.role = data.role;
+
+
+
+        
       } catch (error) {
         // Handle other errors (e.g., network error)
         showModal.value = true;

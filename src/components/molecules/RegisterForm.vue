@@ -5,24 +5,23 @@
       <br />
       <div>
         <label>
-          <input type="radio" v-model="formData.selectedGender" name="picGender" value="male"> Male
+          <input type="radio" v-model="formData.gender" name="picGender" value="Herr"> Männlich
         </label>
       </div>
       <div>
         <label>
-          <input type="radio" v-model="formData.selectedGender" name="picGender" value="female"> Female
+          <input type="radio" v-model="formData.gender" name="picGender" value="Frau"> Weiblich
         </label>
       </div>
-
       <div>
         <label>
-          <input type="radio" v-model="formData.selectedGender" name="picGender" value="diverse"> Diverse
+          <input type="radio" v-model="formData.selectedGender" name="picGender" value="diverse"> Divers
         </label>
 
         <div v-if="formData.selectedGender === 'diverse'">
           <label>
-            Diverse Details:
-            <input v-model="formData.diverseDetails" type="text" id="gender" />
+            Divers Details:
+            <input v-model="formData.gender" type="text" id="gender" />
           </label>
         </div>
       </div>
@@ -48,17 +47,20 @@
 import { ref } from "vue";
 
 export default {
+  name: "RegisterForm",
   setup(_, { emit }) {
     // Reactive properties for form fields
+
     const formData = ref({
       username: "",
       email: "",
       password: "",
+      gender: "",
     });
 
     const submitForm = () => {
       // Validate form data and perform any necessary actions
-
+      console.log("Form data before emit:", formData.value);
       // Emit a custom event with the form data
       emit("form-submitted", formData.value);
     };

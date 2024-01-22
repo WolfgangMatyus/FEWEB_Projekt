@@ -8,6 +8,7 @@ export const useUserStore = defineStore("user", {
       username: "",
       token: "",
       role: "",
+      gender: "",
     };
   },
   getters: {
@@ -25,7 +26,7 @@ export const useUserStore = defineStore("user", {
 
         const apiUrl = "/api/user/" + username;
         const accessToken = localStorage.getItem('access_token');
-        const role = localStorage.getItem('role');
+      
         console.log(accessToken);
     
         const response = await fetch(apiUrl, {
@@ -45,12 +46,12 @@ export const useUserStore = defineStore("user", {
         //const usersArray = data.users;
         console.log(data);
         console.log(username);
-        console.log(role);
 
         this.email = data.email;
         this.username = data.username;
         this.role = data.role;
-        
+        this.gender = data.gender;
+
       } catch (error) {
         console.error("Error during login:", error);
         throw error;
@@ -90,11 +91,13 @@ export const useUserStore = defineStore("user", {
     async update() {
       try {
         const apiUrl = "/api/user/";
-    
+        const accessToken = localStorage.getItem('access_token');
+
         const response = await fetch(apiUrl, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
             username: '',
@@ -110,7 +113,34 @@ export const useUserStore = defineStore("user", {
         console.error("Error during login:", error);
         throw error;
       }
+    },
+    async deleteFunction(emailToDelete) {
+    try {
+      const apiUrl = "/api/admin/user/" + emailToDelete;
+      const accessToken = localStorage.getItem('access_token');
+  
+      const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          username: '',
+          email: '',
+          password: '',
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }    
+    } catch (error) {
+      console.error("Error during delete:", error);
+      throw error;
     }
   },
+  },
+  
   
 });

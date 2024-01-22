@@ -4,15 +4,18 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
       <div>
-        <button @click="this.store.user">Userdetails</button>
-        <button @click="this.store.update">Update</button>
+        <Button @click="this.store.user">Userdetails</Button>
+
         <div>
           {{ this.store.token }}
         </div>
         <Paragraph v-if="this.store.isLoggedIn">
           <div>
+            <b> Anrede: </b>
+            {{ this.store.gender }}
+          </div>
+          <div>
             <b> Name: </b>
-          
             {{ this.store.username }}
           </div>
           <div>
@@ -25,6 +28,7 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
           </div>
         </Paragraph>
       </div>
+      <UpdateForm @form-submitted="handleFormSubmitted" />
 
       <hr />
       <Paragraph>{{ ParagraphContent }}</Paragraph>
@@ -36,14 +40,56 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
 import { useUserStore } from "@/pinia-store/user";
+import Button from "@/components/atoms/Button.vue";
+import UpdateForm from "@/components/molecules/UpdateForm.vue";
+import { ref } from "vue";
+
 
 export default {
   name: "Profile",
   components: {
     Title,
     Paragraph,
+    Button,
+    UpdateForm,
   },
+  setup() {
+    const registeredUser = ref(null);
 
+    const handleFormSubmitted = async (formData) => {
+      try {
+
+
+      // Access the email property in the payload
+
+        
+        const accessToken = localStorage.getItem('access_token');
+        
+        // Your API call code here
+        const response = await fetch("/api/user/" + formData.email + "?username=" + formData.username, {
+          
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(formData),
+        });
+        console.log(formData);
+        if (response.ok) {
+          // API call succeeded, handle success
+          registeredUser.value = formData;
+        } else {
+          // API call failed, handle error
+          console.error("API call failed:", response.statusText);
+        }
+      } catch (error) {
+        // Handle other errors (e.g., network error)
+        console.error("Error submitting form:", error);
+      }
+    };
+    return { registeredUser, handleFormSubmitted };
+  },
   data() {
     return {
       store: useUserStore(),
