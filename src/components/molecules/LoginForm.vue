@@ -10,6 +10,12 @@
     <br />
     <button type="submit">Login</button>
   </form>
+  <div>
+    <Modal v-if="showModal" @closeModal="closeModal">
+      <!-- Content to display in the modal goes here -->
+      <p>Missing Credentials</p>
+    </Modal>
+  </div>
 </template>
 
 <script>
@@ -38,6 +44,7 @@ export default {
 
       console.log("Form submitted event emitted");
     };
+
     return { formData, submitForm };
   },
 };

@@ -1,61 +1,80 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../views/Home.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: "/",
+    name: "home",
+    component: Home,
   },
 
   {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
   },
   {
-    path: '/register',
-    name: 'register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+    path: "/register",
+    name: "register",
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
   },
   {
-    path: '/faq',
-    name: 'faq',
-    component: () => import(/* webpackChunkName: "faq" */ '../views/FAQ.vue'),
+    path: "/faq",
+    name: "faq",
+    component: () => import(/* webpackChunkName: "faq" */ "../views/FAQ.vue"),
   },
   {
-    path: '/imprint',
-    name: 'imprint',
-    component: () => import(/* webpackChunkName: "imprint" */ '../views/Imprint.vue'),
+    path: "/imprint",
+    name: "imprint",
+    component: () =>
+      import(/* webpackChunkName: "imprint" */ "../views/Imprint.vue"),
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
+    path: "/profile",
+    name: "profile",
+    component: () =>
+      import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
   },
   {
-    path: '/logout',
-    name: 'logout',
-    component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
+    path: "/logout",
+    name: "logout",
+    component: () =>
+      import(/* webpackChunkName: "logout" */ "../views/Logout.vue"),
   },
   {
-    path: '/management',
-    name: 'management',
-    component: () => import(/* webpackChunkName: "management" */ '../views/Management.vue'),
+    path: "/management",
+    name: "management",
+    component: () =>
+      import(/* webpackChunkName: "management" */ "../views/Management.vue"),
   },
-  /*{
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ /*'../views/AboutView.vue')
-  }*/
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (to.path === "/profile" && !isLoggedIn) {
+    // Redirect to login if trying to access Imprint and not logged in
+    next("/login");
+  } else if (to.path === "/management" && !isLoggedIn) {
+    // Redirect to login if trying to access Imprint and not logged in
+    next("/login");
+  } else if (to.path === "/logout" && !isLoggedIn) {
+    // Redirect to login if trying to access Imprint and not logged in
+    next("/login");
+  } else if (to.path === "/Modal" && !isLoggedIn) {
+    // Redirect to login if trying to access Imprint and not logged in
+    next("/login");
+  } else {
+    // Continue to the requested route
+    next();
+  }
+});
+
+export default router;
