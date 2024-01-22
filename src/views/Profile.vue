@@ -11,8 +11,16 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
         </div>
         <Paragraph v-if="this.store.isLoggedIn">
           <div>
-            <b> Anrede: </b>
+            <b> uuid: </b>
+            {{ this.store.uuid }}
+          </div>
+          <div>
+            <b> Gender: </b>
             {{ this.store.gender }}
+          </div>
+          <div>
+            <b> Anrede: </b>
+            {{ this.store.salutation }}
           </div>
           <div>
             <b> Name: </b>
@@ -26,11 +34,6 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
             <b> Role: </b>
             {{ this.store.role }}
           </div>
-          <input type="text" v-model="this.store.username" />
-          <input type="text" v-model="this.store.email" />
-          <input type="text" v-model="this.store.gender" />
-          <input type="text" v-model="this.store.role" />
-          <Button @click="this.store.user">Update Userdetails</Button>
         </Paragraph>
       </div>
       <UpdateForm @form-submitted="handleFormSubmitted" />
@@ -49,7 +52,6 @@ import Button from "@/components/atoms/Button.vue";
 import UpdateForm from "@/components/molecules/UpdateForm.vue";
 import { ref } from "vue";
 
-
 export default {
   name: "Profile",
   components: {
@@ -63,16 +65,15 @@ export default {
 
     const handleFormSubmitted = async (formData) => {
       try {
-
-        const accessToken = localStorage.getItem('access_token');
-        
+        const accessToken = localStorage.getItem("access_token");
+        const uuid = useUserStore().uuid;
+        console.log("/api/user/" + uuid);
         // Your API call code here
-        const response = await fetch("/api/user/" + formData.email + "?username=" + formData.username, {
-          
+        const response = await fetch("/api/user/" + uuid, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify(formData),
         });

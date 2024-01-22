@@ -9,9 +9,10 @@
       </div>
       <form @submit.prevent="handleSubmit">
         <label for="email">Email:</label>
-        <input type="email" id="email" v-model="formData.email">
+        <input type="email" id="email" v-model="formData.email" />
         <Button type="submit">Delete</Button>
       </form>
+      <Button @click="getUsers">Get All Users</Button>
       <div class="justify-content-center"></div>
     </div>
   </div>
@@ -47,6 +48,15 @@ export default {
       } catch (error) {
         // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
         console.error("Error during delete:", error);
+      }
+    },
+    async getUsers() {
+      try {
+        const users = await this.store.getAllUsers();
+        console.log("All Users:", users);
+        // Do something with the fetched users, e.g., display them in the UI
+      } catch (error) {
+        console.error("Error fetching all users:", error);
       }
     },
   },
