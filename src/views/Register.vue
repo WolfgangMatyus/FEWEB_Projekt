@@ -39,11 +39,11 @@ export default {
           registeredUser.value = formData;
         } else {
           // API call failed, handle error
-          console.error("API call failed:", response.statusText);
+          //console.error("API call failed:", response.statusText);
         }
       } catch (error) {
         // Handle other errors (e.g., network error)
-        console.error("Error submitting form:", error);
+        //console.error("Error submitting form:", error);
       }
     };
     return { registeredUser, handleFormSubmitted };

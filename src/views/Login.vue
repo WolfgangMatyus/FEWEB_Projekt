@@ -40,7 +40,7 @@ export default {
       try {
         // Überprüfe, ob formData Werte für username und password enthält
         if (!formData.username || !formData.password) {
-          console.error("Username and password are required.");
+          //console.error("Username and password are required.");
           return;
         }
 
@@ -72,7 +72,7 @@ export default {
           window.location.href = "/profile";
         } else {
           // API call failed, handle error
-          console.error("API call failed:", response.statusText);
+          //console.error("API call failed:", response.statusText);
         }
         const apiUrl2 = "/api/user/" + formData.username;
         const accessToken = localStorage.getItem("access_token");
@@ -97,7 +97,7 @@ export default {
         
       } catch (error) {
         // Handle other errors (e.g., network error)
-        console.error("Error submitting form:", error);
+        //console.error("Error submitting form:", error);
       }
       console.log(localStorage.getItem("access_token"));
     };
