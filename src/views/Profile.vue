@@ -3,7 +3,40 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
   <div class="container">
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
-      
+
+      <form @submit.prevent="submitForm">
+        <label for="uuid">product-uuid:</label>
+        <br />
+        <input v-model="productData.uuid" type="UUID" id="uuid" />
+        <br />
+        <button type="submit">Buy Product via uuid</button>
+      </form>
+      <hr />
+      <Button @click="getCart">Get my Cart</Button>
+      <div
+        v-if="
+          $data.cart && $data.cart.products && $data.cart.products.length > 0
+        "
+      >
+        <div>
+          <h3>Cart-UUID: {{ cart.uuid }}</h3>
+          <div v-for="product in cart.products" :key="product.uuid">
+            <!-- Render content for each product -->
+            <p>Name: {{ product.name }}</p>
+            <p>Kategorie: {{ product.category }}</p>
+            <p>Preis: {{ product.price }}</p>
+            <!-- Add more details or customize as needed -->
+            <hr />
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <!-- Render loading or placeholder content -->
+        No products in the cart
+      </div>
+      <hr />
+      <ProductForm @form-submitted="handleFormSubmitted2" />
+
       <hr />
       <div class="row"> 
         <div class="col">
@@ -104,6 +137,43 @@ export default {
   },
   setup() {
 
+    const productData = ref({
+      uuid: "",
+    });
+
+    const submitForm = async () => {
+      try {
+        const accessToken = localStorage.getItem("access_token");
+        const uuid = useUserStore().uuid;
+        const response = await fetch("/api/user/cart/" + uuid, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const cart = await response.json();
+        const cartUuid = cart.uuid;
+        const response2 = await fetch("/api/user/cart/addProduct", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            cartUuid: cartUuid,
+            productUuid: productData.value.uuid,
+          }),
+        });
+
+        await response2;
+      } catch (error) {
+        // Handle other errors (e.g., network error)
+        console.error("Error submitting form:", error);
+      }
+    };
+
+    const registeredUser = ref(null);
     const newProduct = ref(null);
     const updatedUser = ref(null);
 
@@ -121,7 +191,7 @@ export default {
           },
           body: JSON.stringify(formData),
         });
-        
+
         if (response.ok) {
           // API call succeeded, handle success
           updatedUser.value = formData;
@@ -194,7 +264,9 @@ export default {
       updatedUser,
       handleUpdateFormSubmitted,
       handleFormSubmitted2,
-      handleChangePasswordFormSubmitted
+      handleChangePasswordFormSubmitted,
+      productData,
+      submitForm,
     };
   }, 
   data() {
