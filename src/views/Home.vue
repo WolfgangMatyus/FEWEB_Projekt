@@ -16,19 +16,13 @@
         @search="handleInput"
       ></SearchField>
 
-      <ul v-if="searchResults.length > 0">
-        <li v-for="result in searchResults" :key="result.id">
-          {{ result.title }}
-        </li>
-      </ul>
-
 
       <div class="row">
         <Card
-        v-for="(product, index) in products"
-        :key="index"
-        :cardData="product"
-        :class="ClassStyle"
+          v-for="(product, index) in displayedProducts"
+          :key="index"
+          :cardData="product"
+          :class="ClassStyle"
         />
       </div>
     </div>
@@ -68,32 +62,20 @@ export default {
       products: [],
     };
   },
-  mounted() {
-    this.getProducts();
-  },
   computed: {
-    filteredCards() {
-      // Filter cards based on the search query
-      const filtered = this.products.filter((product) =>
-      product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-
-      // Log the intermediate results for debugging
-      console.log("Filtered:", filtered);
-
-      return filtered;
+    displayedProducts() {
+      return this.searchQuery ? this.searchResults : this.products;
     },
   },
   methods: {
     async getProducts() {
       try {
         this.isLoading = true;
-        
+
         const apiUrl = "/api/products";
 
         const response = await fetch(apiUrl, {
           method: "GET",
-          
         });
 
         if (!response.ok) {
@@ -104,13 +86,16 @@ export default {
         this.products = products;
       } catch (error) {
         console.error("Error during api-call:", error);
-        // handle error
       } finally {
         this.isLoading = false;
       }
     },
     handleInput(query) {
       this.searchQuery = query;
+      // Update searchResults based on the new searchQuery
+      this.searchResults = this.products.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
     },
   },
   created() {
