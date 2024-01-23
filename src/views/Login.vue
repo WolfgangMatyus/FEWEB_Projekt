@@ -39,7 +39,7 @@ export default {
     const showModal = ref(false);
 
     const handleFormSubmitted = async (formData) => {
-      console.log("Form data received:", formData);
+
       try {
         // Überprüfe, ob formData Werte für username und password enthält
         if (!formData.username || !formData.password) {
@@ -56,8 +56,6 @@ export default {
           },
           body: JSON.stringify(formData),
         });
-
-        console.log(response);
 
         if (response.ok) {
           const isLoggedIn = true;
@@ -99,11 +97,9 @@ export default {
         showModal.value = true;
         console.error("Error submitting form:", error);
       }
-      console.log(localStorage.getItem("access_token"));
     };
 
     const openModal = () => {
-      console.log("Opening modal");
       showModal.value = true;
     };
 
