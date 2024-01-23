@@ -23,17 +23,13 @@
     >
 
     <div v-if="isUserLoggedIn">
-      Welcome, {{ store.gender }} {{ username }} !
+      Welcome, {{ store.salutation }} {{ username }} !
     </div>
   </div>
-
-
 </template>
 
 <script>
 import { useUserStore } from "@/pinia-store/user";
-
-
 
 export default {
   name: "Navigation",
@@ -44,7 +40,6 @@ export default {
       isUserLoggedIn: localStorage.getItem("isLoggedIn"),
       username: this.usernameProp,
       adminRole: "ROLE_ADMIN",
-
     };
   },
   mounted() {
@@ -54,10 +49,9 @@ export default {
     getUser() {
       this.username = localStorage.getItem("username");
     },
-},
+  },
 };
 </script>
-
 
 <style>
 .nav-link {

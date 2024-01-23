@@ -43,7 +43,6 @@ export default {
       try {
         // Überprüfe, ob formData Werte für username und password enthält
         if (!formData.username || !formData.password) {
-
           showModal.value = true;
           console.error("Username and password are required.");
           return;
@@ -72,7 +71,6 @@ export default {
           localStorage.setItem("isLoggedIn", isLoggedIn);
           localStorage.setItem("username", formData.username);
 
-
           window.location.href = "/profile";
         } else {
           // API call failed, handle error
@@ -96,10 +94,6 @@ export default {
         this.email = data.email;
         this.username = data.username;
         this.role = data.role;
-
-
-
-        
       } catch (error) {
         // Handle other errors (e.g., network error)
         showModal.value = true;

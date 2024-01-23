@@ -6,7 +6,6 @@
         <Paragraph>{{ subtitleContent }}</Paragraph>
       </div>
 
-      <!-- Use the SearchField component here -->
       <SearchField
         :labelId="labelId"
         :labelType="labelType"
@@ -17,18 +16,12 @@
         @search="handleInput"
       ></SearchField>
 
-      <!-- Display search results here -->
-      <ul v-if="searchResults.length > 0">
-        <li v-for="result in searchResults" :key="result.id">
-          {{ result.title }}
-        </li>
-      </ul>
+
       <div class="row">
-        <!-- Verwenden Sie filteredCards anstelle von cards -->
         <Card
-          v-for="(card, index) in filteredCards"
+          v-for="(product, index) in displayedProducts"
           :key="index"
-          :cardData="card"
+          :cardData="product"
           :class="ClassStyle"
         />
       </div>
@@ -66,74 +59,49 @@ export default {
       searchPlaceholder: "Search...",
       searchQuery: "",
       searchResults: [],
-      cards: [
-        {
-          id: 1,
-          title: "Auktionsobjekt 1",
-          subtitle: "Dieses Objekt ist ganz was besonderes...",
-          imageUrl: "/img/SYS_logo.jpg",
-          content: "Content 1",
-        },
-        {
-          id: 2,
-          title: "Auktionsobjekt 2",
-          subtitle: "Dieses Objekt ist einzigartig...",
-          imageUrl: "/img/SYS_logo.jpg",
-          content: "Content 2",
-        },
-        {
-          id: 3,
-          title: "Auktionsobjekt 3",
-          subtitle: "Dieses Objekt ist speziell für...",
-          imageUrl: "/img/SYS_logo.jpg",
-          content: "Content 3",
-        },
-        {
-          id: 4,
-          title: "Auktionsobjekt 4",
-          subtitle: "Dieses Objekt ist ganz was besonderes...",
-          imageUrl: "/img/SYS_logo.jpg",
-          content: "Content 4",
-        },
-        {
-          id: 5,
-          title: "Auktionsobjekt 5",
-          subtitle: "Dieses Objekt ist ganz was besonderes...",
-          imageUrl: "/img/SYS_logo.jpg",
-          content: "Content 5",
-        },
-        {
-          id: 6,
-          title: "Auktionsobjekt 6",
-          subtitle: "Dieses Objekt ist ganz was besonderes...",
-          imageUrl: "/img/SYS_logo.jpg",
-          content: "Content 6",
-        },
-      ],
+      products: [],
     };
   },
   computed: {
-    filteredCards() {
-      // Filter cards based on the search query
-      const filtered = this.cards.filter((card) =>
-        card.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-
-      // Log the intermediate results for debugging
-      console.log("Filtered:", filtered);
-
-      return filtered;
+    displayedProducts() {
+      return this.searchQuery ? this.searchResults : this.products;
     },
   },
   methods: {
-    // Handle the search event triggered by Navigation.vue
+    async getProducts() {
+      try {
+        this.isLoading = true;
+
+        const apiUrl = "/api/products";
+
+        const response = await fetch(apiUrl, {
+          method: "GET",
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const products = await response.json();
+        this.products = products;
+      } catch (error) {
+        console.error("Error during api-call:", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     handleInput(query) {
       this.searchQuery = query;
+      // Update searchResults based on the new searchQuery
+      this.searchResults = this.products.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
     },
   },
   created() {
     // Listen for the search event from Navigation.vue
     mitt().on("search", this.handleInput);
+    this.getProducts();
   },
 };
 </script>
