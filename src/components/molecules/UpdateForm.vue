@@ -16,10 +16,7 @@
     <br />
     <input v-model="formData.username" type="text" id="username" />
     <br />
-    <label for="password">Password:</label>
-    <br />
-    <input v-model="formData.password" type="text" id="password" />
-    <br />
+   
     <Button type="submit">Update</Button>
   </form>
 </template>
@@ -42,7 +39,6 @@ export default {
       gender: "",
       username: "",
       email: "",
-      password: "",
     });
 
     const submitForm = () => {
