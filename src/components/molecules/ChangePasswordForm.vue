@@ -1,5 +1,7 @@
 <template>
     <form @submit.prevent="submitForm">
+      <div class="error" v-if="passwordValidationError">{{ passwordValidationError }}</div>
+
       <label for="password">NEW Password:</label>
       <br />
       <input v-model="formCPData.password" type="password" id="password" />
@@ -8,7 +10,7 @@
       <br />
       <input v-model="formCPData.password2" type="password" id="password" />
       <br />
-      <div v-if="passwordsMatchError">{{ passwordsMatchError }}</div>
+      
       <Button type="submit">Change Password</Button>
     </form>
   </template>
@@ -29,18 +31,32 @@ export default {
       password2: "",
     });
 
-    const passwordsMatchError = ref(null);
+    const passwordValidationError = ref(null);
+
 
     const submitForm = () => {
-        if (formCPData.value.password !== formCPData.value.password2) {
-        passwordsMatchError.value = "Passwords do not match";
+      if (formCPData.value.password.trim() === "") {
+        passwordValidationError.value = "Password cannot be empty";
+        return;
       } else {
-        passwordsMatchError.value = null;
+        passwordValidationError.value = null;
+      }
+
+        if (formCPData.value.password !== formCPData.value.password2) {
+          passwordValidationError.value = "Passwords do not match";
+      } else {
+        passwordValidationError.value = null;
         emit("form-submitted", formCPData.value);
       }
     };
 
-    return { formCPData, submitForm, passwordsMatchError };
+    return { formCPData, submitForm, passwordValidationError };
   },
 };
 </script>
+
+<style scoped>
+
+.error{color: red}
+
+</style>

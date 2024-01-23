@@ -3,30 +3,10 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
   <div class="container">
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
-      <Button @click="getCart">Get my Cart</Button>
-      <div
-        v-if="
-          $data.cart && $data.cart.products && $data.cart.products.length > 0
-        "
-      >
-        <div>
-          <h3>Cart-UUID: {{ cart.uuid }}</h3>
-          <div v-for="product in cart.products" :key="product.uuid">
-            <!-- Render content for each product -->
-            <p>Name: {{ product.name }}</p>
-            <p>Kategorie: {{ product.category }}</p>
-            <p>Preis: {{ product.price }}</p>
-            <!-- Add more details or customize as needed -->
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <!-- Render loading or placeholder content -->
-        No products in the cart
-      </div>
+      
       <hr />
-      <ProductForm @form-submitted="handleFormSubmitted2" />
-      <hr />
+      <div class="row"> 
+        <div class="col">
       <div>
         <Button @click="this.store.user">Userdetails</Button>
 
@@ -65,16 +45,39 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
             {{ this.store.role }}
           </div>
         </Paragraph>
+        <hr />
         <div>
           <Button v-if="showPCButton" @click="showChangePasswordForm">Change Password</Button>
           <ChangePasswordForm v-if="showPCForm" @form-submitted="handleChangePasswordFormSubmitted" />
         </div>
       </div>
       <UpdateForm @form-submitted="handleUpdateFormSubmitted" />
-
+      </div>
+        <div class="col">
+      
+      <Button @click="getCart">Get my Cart</Button>
+      <div v-if=" $data.cart && $data.cart.products && $data.cart.products.length > 0 ">
+        <div>
+          <h3>Cart-UUID: {{ cart.uuid }}</h3>
+          <div v-for="product in cart.products" :key="product.uuid">
+            <!-- Render content for each product -->
+            <p>Name: {{ product.name }}</p>
+            <p>Kategorie: {{ product.category }}</p>
+            <p>Preis: {{ product.price }}</p>
+            <!-- Add more details or customize as needed -->
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <!-- Render loading or placeholder content -->
+        No products in the cart
+      </div>
       <hr />
+      <ProductForm @form-submitted="handleFormSubmitted2" />
     </div>
   </div>
+</div>
+      </div>
 </template>
 
 <script>
@@ -84,11 +87,8 @@ import Image from "@/components/atoms/Image.vue";
 import { useUserStore } from "@/pinia-store/user";
 import Button from "@/components/atoms/Button.vue";
 import UpdateForm from "@/components/molecules/UpdateForm.vue";
-
 import ProductForm from "@/components/molecules/ProductForm.vue";
-
 import ChangePasswordForm from "@/components/molecules/ChangePasswordForm.vue";
-
 import { ref } from "vue";
 
 export default {
@@ -163,16 +163,7 @@ export default {
       }
     };
 
-    return {
-      newProduct,
-      registeredUser,
-      handleFormSubmitted,
-      handleFormSubmitted2,
-    };
-
-    },
-
-    handleChangePasswordFormSubmitted = async (formCPData) => {
+    const handleChangePasswordFormSubmitted = async (formCPData) => {
       try {
             const accessToken = localStorage.getItem("access_token");
             const uuid = useUserStore().uuid;
@@ -198,10 +189,14 @@ export default {
             console.error("Error submitting form:", error);
             }
     }
-    return { updatedUser, handleChangePasswordFormSubmitted, handleUpdateFormSubmitted };
-
-  },
- 
+    return {
+      newProduct,
+      updatedUser,
+      handleUpdateFormSubmitted,
+      handleFormSubmitted2,
+      handleChangePasswordFormSubmitted
+    };
+  }, 
   data() {
     return {
       store: useUserStore(),
@@ -214,23 +209,13 @@ export default {
 
     };
   },
-  methods: {
-    showChangePasswordForm() {
-      this.showPCForm = true;
-      this.showPCButton = false
-    },
-    
-  },
-  mounted: async function () {
-    console.log(this.store.isLoggedIn);
-  },
+   
   methods: {
     async getCart() {
       try {
         const accessToken = localStorage.getItem("access_token");
         const uuid = useUserStore().uuid;
         const apiUrl = "/api/user/cart/" + uuid;
-        console.log("api: " + apiUrl);
         const response = await fetch(apiUrl, {
           method: "GET",
           headers: {
@@ -245,12 +230,19 @@ export default {
 
         const cart = await response.json();
         this.cart = cart;
-        console.log(cart);
       } catch (error) {
         console.error("Error during api-call:", error);
         throw error;
       }
     },
+    showChangePasswordForm() {
+      this.showPCForm = true;
+      this.showPCButton = false
+    },
+    
+  },
+  mounted: async function () {
+    console.log(this.store.isLoggedIn);
   },
 };
 </script>
