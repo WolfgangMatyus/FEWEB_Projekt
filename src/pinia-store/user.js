@@ -143,30 +143,5 @@ export const useUserStore = defineStore("user", {
         throw error;
       }
     },
-    async getAllUsers() {
-      console.log("hierher?");
-      try {
-        const apiUrl = "/api/admin/users";
-        const accessToken = localStorage.getItem("access_token");
-
-        const response = await fetch(apiUrl, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.error("Error during api-call:", error);
-        throw error;
-      }
-    },
   },
 });

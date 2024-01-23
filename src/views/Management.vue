@@ -12,7 +12,11 @@
         <input type="email" id="email" v-model="formData.email" />
         <Button type="submit">Delete</Button>
       </form>
-      <Button @click="getUsers">Get All Users</Button>
+      <Button @click="getAllUsers">Get All Users</Button>
+      <div class="row">
+        <!-- Verwenden Sie filteredCards anstelle von cards -->
+        {{ users }}
+      </div>
       <div class="justify-content-center"></div>
     </div>
   </div>
@@ -36,6 +40,7 @@ export default {
       formData: {
         email: "",
       },
+      users: [],
     };
   },
   methods: {
@@ -50,13 +55,30 @@ export default {
         console.error("Error during delete:", error);
       }
     },
-    async getUsers() {
+    async getAllUsers() {
+      console.log("hierher?");
       try {
-        const users = await this.store.getAllUsers();
-        console.log("All Users:", users);
-        // Do something with the fetched users, e.g., display them in the UI
+        const apiUrl = "/api/admin/users";
+        const accessToken = localStorage.getItem("access_token");
+
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const users = await response.json();
+        this.users = users;
+        console.log(users);
       } catch (error) {
-        console.error("Error fetching all users:", error);
+        console.error("Error during api-call:", error);
+        throw error;
       }
     },
   },
