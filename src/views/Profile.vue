@@ -38,79 +38,89 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
       <ProductForm @form-submitted="handleFormSubmitted2" />
 
       <hr />
-      <div class="row"> 
+      <div class="row">
         <div class="col">
-      <div>
-        <Button @click="this.store.user">Userdetails</Button>
+          <div>
+            <Button @click="this.store.user">Userdetails</Button>
 
-        <div>
-          {{ this.store.token }}
+            <div>
+              {{ this.store.token }}
+            </div>
+            <Paragraph v-if="this.store.isLoggedIn">
+              <div>
+                <b> uuid: </b>
+                {{ this.store.uuid }}
+              </div>
+              <div>
+                <b> Profile Picture: </b>
+              </div>
+              <div>
+                <Image :url="imageUrl" />
+              </div>
+              <div>
+                <b> Gender: </b>
+                {{ this.store.gender }}
+              </div>
+              <div>
+                <b> Anrede: </b>
+                {{ this.store.salutation }}
+              </div>
+              <div>
+                <b> Name: </b>
+                {{ this.store.username }}
+              </div>
+              <div>
+                <b> Email: </b>
+                {{ this.store.email }}
+              </div>
+              <div>
+                <b> Role: </b>
+                {{ this.store.role }}
+              </div>
+            </Paragraph>
+            <hr />
+            <div>
+              <Button v-if="showPCButton" @click="showChangePasswordForm"
+                >Change Password</Button
+              >
+              <ChangePasswordForm
+                v-if="showPCForm"
+                @form-submitted="handleChangePasswordFormSubmitted"
+              />
+            </div>
+          </div>
+          <UpdateForm @form-submitted="handleUpdateFormSubmitted" />
         </div>
-        <Paragraph v-if="this.store.isLoggedIn">
-          <div>
-            <b> uuid: </b>
-            {{ this.store.uuid }}
-          </div>
-          <div>
-            <b> Profile Picture: </b>
-          </div>
-          <div>
-            <Image :url="imageUrl" />
-          </div>
-          <div>
-            <b> Gender: </b>
-            {{ this.store.gender }}
-          </div>
-          <div>
-            <b> Anrede: </b>
-            {{ this.store.salutation }}
-          </div>
-          <div>
-            <b> Name: </b>
-            {{ this.store.username }}
-          </div>
-          <div>
-            <b> Email: </b>
-            {{ this.store.email }}
-          </div>
-          <div>
-            <b> Role: </b>
-            {{ this.store.role }}
-          </div>
-        </Paragraph>
-        <hr />
-        <div>
-          <Button v-if="showPCButton" @click="showChangePasswordForm">Change Password</Button>
-          <ChangePasswordForm v-if="showPCForm" @form-submitted="handleChangePasswordFormSubmitted" />
-        </div>
-      </div>
-      <UpdateForm @form-submitted="handleUpdateFormSubmitted" />
-      </div>
         <div class="col">
-      
-      <Button @click="getCart">Get my Cart</Button>
-      <div v-if=" $data.cart && $data.cart.products && $data.cart.products.length > 0 ">
-        <div>
-          <h3>Cart-UUID: {{ cart.uuid }}</h3>
-          <div v-for="product in cart.products" :key="product.uuid">
-            <!-- Render content for each product -->
-            <p>Name: {{ product.name }}</p>
-            <p>Kategorie: {{ product.category }}</p>
-            <p>Preis: {{ product.price }}</p>
-            <!-- Add more details or customize as needed -->
+          <Button @click="getCart">Get my Cart</Button>
+          <div
+            v-if="
+              $data.cart &&
+              $data.cart.products &&
+              $data.cart.products.length > 0
+            "
+          >
+            <div>
+              <h3>Cart-UUID: {{ cart.uuid }}</h3>
+              <div v-for="product in cart.products" :key="product.uuid">
+                <!-- Render content for each product -->
+                <p>Name: {{ product.name }}</p>
+                <p>Kategorie: {{ product.category }}</p>
+                <p>Preis: {{ product.price }}</p>
+                <!-- Add more details or customize as needed -->
+              </div>
+            </div>
           </div>
+          <div v-else>
+            <!-- Render loading or placeholder content -->
+            No products in the cart
+          </div>
+          <hr />
+          <ProductForm @form-submitted="handleFormSubmitted2" />
         </div>
       </div>
-      <div v-else>
-        <!-- Render loading or placeholder content -->
-        No products in the cart
-      </div>
-      <hr />
-      <ProductForm @form-submitted="handleFormSubmitted2" />
     </div>
   </div>
-</div>
-      </div>
 </template>
 
 <script>
@@ -136,7 +146,6 @@ export default {
     ProductForm,
   },
   setup() {
-
     const productData = ref({
       uuid: "",
     });
@@ -173,12 +182,10 @@ export default {
       }
     };
 
-    const registeredUser = ref(null);
     const newProduct = ref(null);
     const updatedUser = ref(null);
 
     const handleUpdateFormSubmitted = async (formData) => {
-
       try {
         const accessToken = localStorage.getItem("access_token");
         const uuid = useUserStore().uuid;
@@ -203,7 +210,6 @@ export default {
         // Handle other errors (e.g., network error)
         console.error("Error submitting form:", error);
       }
-
     };
 
     const handleFormSubmitted2 = async (formData) => {
@@ -235,30 +241,30 @@ export default {
 
     const handleChangePasswordFormSubmitted = async (formCPData) => {
       try {
-            const accessToken = localStorage.getItem("access_token");
-            const uuid = useUserStore().uuid;
-            // Your API call code here
-            const response = await fetch("/api/user/changePassword/" + uuid, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-              },
-              body: JSON.stringify(formCPData),
-            });
+        const accessToken = localStorage.getItem("access_token");
+        const uuid = useUserStore().uuid;
+        // Your API call code here
+        const response = await fetch("/api/user/changePassword/" + uuid, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(formCPData),
+        });
 
-            if (response.ok) {
-              // API call succeeded, handle success
-              updatedUser.value = formCPData;
-            } else {
-              // API call failed, handle error
-              console.error("API call failed:", response.statusText);
-            }
-            } catch (error) {
-            // Handle other errors (e.g., network error)
-            console.error("Error submitting form:", error);
-            }
-    }
+        if (response.ok) {
+          // API call succeeded, handle success
+          updatedUser.value = formCPData;
+        } else {
+          // API call failed, handle error
+          console.error("API call failed:", response.statusText);
+        }
+      } catch (error) {
+        // Handle other errors (e.g., network error)
+        console.error("Error submitting form:", error);
+      }
+    };
     return {
       newProduct,
       updatedUser,
@@ -268,7 +274,7 @@ export default {
       productData,
       submitForm,
     };
-  }, 
+  },
   data() {
     return {
       store: useUserStore(),
@@ -277,11 +283,10 @@ export default {
       imageUrl: "/img/" + useUserStore().gender + ".png",
       cart: [],
       showPCForm: false,
-      showPCButton: true
-
+      showPCButton: true,
     };
   },
-   
+
   methods: {
     async getCart() {
       try {
@@ -309,9 +314,8 @@ export default {
     },
     showChangePasswordForm() {
       this.showPCForm = true;
-      this.showPCButton = false
+      this.showPCButton = false;
     },
-    
   },
   mounted: async function () {
     console.log(this.store.isLoggedIn);
