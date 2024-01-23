@@ -3,7 +3,7 @@
     <div class="card">
       <CardHead :name="cardData.name" :price="cardData.price" :category="cardData.category" />
       <hr>
-      <CardBody :content="cardData.content" :imageUrl="cardData.imageUrl" />
+      <CardBody :content="cardData.uuid" :imageUrl="imageUrl" />
       <hr>
       <CardFooter :buttonText="cardData.buttonText" @footer-button-click="onFooterButtonClick" />
     </div>
@@ -21,6 +21,7 @@
       CardFooter
     },
     props: ['cardData'],
+    imageUrl: '/img/SYS_logo.jpg',
     methods: {
       onFooterButtonClick() {
         // Handle the button click event

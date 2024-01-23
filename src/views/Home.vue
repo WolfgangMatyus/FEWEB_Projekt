@@ -74,8 +74,8 @@ export default {
   computed: {
     filteredCards() {
       // Filter cards based on the search query
-      const filtered = this.cards.filter((card) =>
-        card.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      const filtered = this.products.filter((product) =>
+      product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
 
       // Log the intermediate results for debugging
@@ -116,6 +116,7 @@ export default {
   created() {
     // Listen for the search event from Navigation.vue
     mitt().on("search", this.handleInput);
+    this.getProducts();
   },
 };
 </script>
