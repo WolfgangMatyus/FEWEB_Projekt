@@ -45,7 +45,8 @@
     <div v-if="$data.carts">
       <div class="row" v-if="carts.length > 0">
         <div v-for="(carts, index) in carts" :key="index">
-          Carts-UUID: {{ carts.uuid }} -- Products: {{ carts.products }}
+          User-UUID: {{ carts.user.uuid }} -- Carts-UUID: {{ carts.uuid }} --
+          Products: {{ carts.products }}
         </div>
       </div>
     </div>
