@@ -3,6 +3,15 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
   <div class="container">
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
+
+      <form @submit.prevent="submitForm">
+        <label for="uuid">product-uuid:</label>
+        <br />
+        <input v-model="productData.uuid" type="UUID" id="uuid" />
+        <br />
+        <button type="submit">Buy Product via uuid</button>
+      </form>
+      <hr />
       <Button @click="getCart">Get my Cart</Button>
       <div
         v-if="
@@ -17,6 +26,7 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
             <p>Kategorie: {{ product.category }}</p>
             <p>Preis: {{ product.price }}</p>
             <!-- Add more details or customize as needed -->
+            <hr />
           </div>
         </div>
       </div>
@@ -94,6 +104,42 @@ export default {
     ProductForm,
   },
   setup() {
+    const productData = ref({
+      uuid: "",
+    });
+
+    const submitForm = async () => {
+      try {
+        const accessToken = localStorage.getItem("access_token");
+        const uuid = useUserStore().uuid;
+        const response = await fetch("/api/user/cart/" + uuid, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const cart = await response.json();
+        const cartUuid = cart.uuid;
+        const response2 = await fetch("/api/user/cart/addProduct", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            cartUuid: cartUuid,
+            productUuid: productData.value.uuid,
+          }),
+        });
+
+        await response2;
+      } catch (error) {
+        // Handle other errors (e.g., network error)
+        console.error("Error submitting form:", error);
+      }
+    };
+
     const registeredUser = ref(null);
     const newProduct = ref(null);
     const handleFormSubmitted = async (formData) => {
@@ -110,7 +156,7 @@ export default {
           },
           body: JSON.stringify(formData),
         });
-        console.log(formData);
+
         if (response.ok) {
           // API call succeeded, handle success
           registeredUser.value = formData;
@@ -156,6 +202,8 @@ export default {
       registeredUser,
       handleFormSubmitted,
       handleFormSubmitted2,
+      productData,
+      submitForm,
     };
   },
   data() {
