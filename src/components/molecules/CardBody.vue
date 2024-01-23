@@ -4,7 +4,7 @@
     <Image :url="imageUrl" />
   </div>
     <div>
-      <Paragraph :text="content">{{ content }}</Paragraph>
+      <Paragraph :text="name">{{ name }}</Paragraph>
     </div>
   </template>
   
@@ -17,7 +17,7 @@
       Paragraph,
       Image,
     },
-    props: ['content', 'imageUrl'],
+    props: ['name', 'imageUrl'],
   }
   </script>
   

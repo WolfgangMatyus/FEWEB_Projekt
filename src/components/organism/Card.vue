@@ -1,7 +1,7 @@
 <!-- Card.vue -->
 <template>
     <div class="card">
-      <CardHead :title="cardData.title" :subtitle="cardData.subtitle" />
+      <CardHead :name="cardData.name" :price="cardData.price" :category="cardData.category" />
       <hr>
       <CardBody :content="cardData.content" :imageUrl="cardData.imageUrl" />
       <hr>

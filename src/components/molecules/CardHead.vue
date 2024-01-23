@@ -1,8 +1,9 @@
 <!-- CardHead.vue -->
 <template>
   <div>
-    <Title :type="titleType" :text="title">{{ title }}</Title>
-    <Paragraph :text="subtitle">{{ subtitle }}</Paragraph>
+    <Title :type="titleType" :text="name">{{ name }}</Title>
+    <Paragraph :text="price">{{ price }}</Paragraph>
+    <Paragraph :text="category">{{ category }}</Paragraph>
   </div>
 </template>
 
@@ -15,7 +16,7 @@ export default {
     Title,
     Paragraph
   },
-  props: ['title', 'subtitle', 'type'],
+  props: ['name', 'price', 'category', 'type'],
 
   data() {
     return {
