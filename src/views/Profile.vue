@@ -65,8 +65,12 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
             {{ this.store.role }}
           </div>
         </Paragraph>
+        <div>
+          <Button v-if="showPCButton" @click="showChangePasswordForm">Change Password</Button>
+          <ChangePasswordForm v-if="showPCForm" @form-submitted="handleChangePasswordFormSubmitted" />
+        </div>
       </div>
-      <UpdateForm @form-submitted="handleFormSubmitted" />
+      <UpdateForm @form-submitted="handleUpdateFormSubmitted" />
 
       <hr />
     </div>
@@ -80,7 +84,11 @@ import Image from "@/components/atoms/Image.vue";
 import { useUserStore } from "@/pinia-store/user";
 import Button from "@/components/atoms/Button.vue";
 import UpdateForm from "@/components/molecules/UpdateForm.vue";
+
 import ProductForm from "@/components/molecules/ProductForm.vue";
+
+import ChangePasswordForm from "@/components/molecules/ChangePasswordForm.vue";
+
 import { ref } from "vue";
 
 export default {
@@ -90,17 +98,20 @@ export default {
     Paragraph,
     Button,
     UpdateForm,
+    ChangePasswordForm,
     Image,
     ProductForm,
   },
   setup() {
-    const registeredUser = ref(null);
+
     const newProduct = ref(null);
-    const handleFormSubmitted = async (formData) => {
+    const updatedUser = ref(null);
+
+    const handleUpdateFormSubmitted = async (formData) => {
+
       try {
         const accessToken = localStorage.getItem("access_token");
         const uuid = useUserStore().uuid;
-        console.log("/api/user/" + uuid);
         // Your API call code here
         const response = await fetch("/api/user/" + uuid, {
           method: "PUT",
@@ -110,10 +121,10 @@ export default {
           },
           body: JSON.stringify(formData),
         });
-        console.log(formData);
+        
         if (response.ok) {
           // API call succeeded, handle success
-          registeredUser.value = formData;
+          updatedUser.value = formData;
         } else {
           // API call failed, handle error
           console.error("API call failed:", response.statusText);
@@ -122,6 +133,7 @@ export default {
         // Handle other errors (e.g., network error)
         console.error("Error submitting form:", error);
       }
+
     };
 
     const handleFormSubmitted2 = async (formData) => {
@@ -157,7 +169,39 @@ export default {
       handleFormSubmitted,
       handleFormSubmitted2,
     };
+
+    },
+
+    handleChangePasswordFormSubmitted = async (formCPData) => {
+      try {
+            const accessToken = localStorage.getItem("access_token");
+            const uuid = useUserStore().uuid;
+            // Your API call code here
+            const response = await fetch("/api/user/changePassword/" + uuid, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+              body: JSON.stringify(formCPData),
+            });
+
+            if (response.ok) {
+              // API call succeeded, handle success
+              updatedUser.value = formCPData;
+            } else {
+              // API call failed, handle error
+              console.error("API call failed:", response.statusText);
+            }
+            } catch (error) {
+            // Handle other errors (e.g., network error)
+            console.error("Error submitting form:", error);
+            }
+    }
+    return { updatedUser, handleChangePasswordFormSubmitted, handleUpdateFormSubmitted };
+
   },
+ 
   data() {
     return {
       store: useUserStore(),
@@ -165,7 +209,17 @@ export default {
       titleContent: "Dein Profil",
       imageUrl: "/img/" + useUserStore().gender + ".png",
       cart: [],
+      showPCForm: false,
+      showPCButton: true
+
     };
+  },
+  methods: {
+    showChangePasswordForm() {
+      this.showPCForm = true;
+      this.showPCButton = false
+    },
+    
   },
   mounted: async function () {
     console.log(this.store.isLoggedIn);

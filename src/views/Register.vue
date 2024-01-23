@@ -33,7 +33,6 @@ export default {
           },
           body: JSON.stringify(formData),
         });
-        console.log(formData);
         if (response.ok) {
           // API call succeeded, handle success
           registeredUser.value = formData;
