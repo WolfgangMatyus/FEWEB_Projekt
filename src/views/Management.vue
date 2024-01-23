@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      console.log("Form Data:", this.formData);
 
       try {
         await this.store.deleteFunction(this.formData.email);
@@ -79,7 +78,6 @@ export default {
       }
     },
     async handleSubmit2() {
-      console.log("Form Data:", this.formData);
 
       try {
         await this.store.deleteFunction2(this.formData.uuid);
@@ -108,7 +106,6 @@ export default {
 
         const users = await response.json();
         this.users = users;
-        console.log(users);
       } catch (error) {
         console.error("Error during api-call:", error);
         throw error;
@@ -131,7 +128,6 @@ export default {
 
         const products = await response.json();
         this.products = products;
-        console.log(products);
       } catch (error) {
         console.error("Error during api-call:", error);
         throw error;

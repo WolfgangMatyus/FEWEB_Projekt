@@ -75,7 +75,6 @@ export default {
 
         const accessToken = localStorage.getItem("access_token");
         const uuid = useUserStore().uuid;
-        console.log("/api/user/" + uuid);
         // Your API call code here
         const response = await fetch("/api/user/" + uuid, {
           method: "PUT",
@@ -85,7 +84,7 @@ export default {
           },
           body: JSON.stringify(formData),
         });
-        console.log(formData);
+        
         if (response.ok) {
           // API call succeeded, handle success
           registeredUser.value = formData;
