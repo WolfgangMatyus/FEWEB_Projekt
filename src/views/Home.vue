@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+
       titleType: "h1",
       titleContent: "Willkommen auf unserer Auktionsplattform",
       subtitleContent: "Hier sehen Sie unsere neuesten Objekte:",
@@ -60,6 +61,7 @@ export default {
       searchQuery: "",
       searchResults: [],
       products: [],
+
     };
   },
   computed: {
