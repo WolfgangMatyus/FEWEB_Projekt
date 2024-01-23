@@ -3,6 +3,9 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
   <div class="container">
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
+
+      <ProductForm @form-submitted="handleFormSubmitted2" />
+      <hr />
       <div>
         <Button @click="this.store.user">Userdetails</Button>
 
@@ -52,10 +55,11 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 <script>
 import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
-import Image from '@/components/atoms/Image.vue';
+import Image from "@/components/atoms/Image.vue";
 import { useUserStore } from "@/pinia-store/user";
 import Button from "@/components/atoms/Button.vue";
 import UpdateForm from "@/components/molecules/UpdateForm.vue";
+import ProductForm from "@/components/molecules/ProductForm.vue";
 import { ref } from "vue";
 
 export default {
@@ -66,10 +70,11 @@ export default {
     Button,
     UpdateForm,
     Image,
+    ProductForm,
   },
   setup() {
     const registeredUser = ref(null);
-
+    const newProduct = ref(null);
     const handleFormSubmitted = async (formData) => {
       try {
         const accessToken = localStorage.getItem("access_token");
@@ -97,15 +102,47 @@ export default {
         console.error("Error submitting form:", error);
       }
     };
-    return { registeredUser, handleFormSubmitted };
+
+    const handleFormSubmitted2 = async (formData) => {
+      try {
+        // Your API call code for handleFormSubmitted2
+        const accessToken = localStorage.getItem("access_token");
+        // Modify the next line according to your API endpoint
+        const response = await fetch("/api/user/product", {
+          method: "POST", // or "PUT" depending on your API
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          // API call succeeded, handle success
+          newProduct.value = formData;
+        } else {
+          // API call failed, handle error
+          console.error("API call failed:", response.statusText);
+        }
+      } catch (error) {
+        // Handle other errors (e.g., network error)
+        console.error("Error submitting form:", error);
+      }
+    };
+
+    return {
+      newProduct,
+      registeredUser,
+      handleFormSubmitted,
+      handleFormSubmitted2,
+    };
   },
   data() {
     return {
       store: useUserStore(),
       titleType: "h1",
-      titleContent: "Über uns",
-      imageUrl: '/img/'+ useUserStore().gender +'.png',
-      
+      titleContent: "Dein Profil",
+      imageUrl: "/img/" + useUserStore().gender + ".png",
     };
   },
   mounted: async function () {
