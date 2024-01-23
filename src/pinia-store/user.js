@@ -143,5 +143,31 @@ export const useUserStore = defineStore("user", {
         throw error;
       }
     },
+    async deleteFunction2(uuidToDelete) {
+      try {
+        const apiUrl = "/api/admin/product/" + uuidToDelete;
+        const accessToken = localStorage.getItem("access_token");
+
+        const response = await fetch(apiUrl, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            username: "",
+            email: "",
+            password: "",
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Error during delete:", error);
+        throw error;
+      }
+    },
   },
 });
