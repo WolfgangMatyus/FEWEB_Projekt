@@ -3,7 +3,28 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
   <div class="container">
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
-
+      <Button @click="getCart">Get my Cart</Button>
+      <div
+        v-if="
+          $data.cart && $data.cart.products && $data.cart.products.length > 0
+        "
+      >
+        <div>
+          <h3>Cart-UUID: {{ cart.uuid }}</h3>
+          <div v-for="product in cart.products" :key="product.uuid">
+            <!-- Render content for each product -->
+            <p>Name: {{ product.name }}</p>
+            <p>Kategorie: {{ product.category }}</p>
+            <p>Preis: {{ product.price }}</p>
+            <!-- Add more details or customize as needed -->
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <!-- Render loading or placeholder content -->
+        No products in the cart
+      </div>
+      <hr />
       <ProductForm @form-submitted="handleFormSubmitted2" />
       <hr />
       <div>
@@ -143,10 +164,39 @@ export default {
       titleType: "h1",
       titleContent: "Dein Profil",
       imageUrl: "/img/" + useUserStore().gender + ".png",
+      cart: [],
     };
   },
   mounted: async function () {
     console.log(this.store.isLoggedIn);
+  },
+  methods: {
+    async getCart() {
+      try {
+        const accessToken = localStorage.getItem("access_token");
+        const uuid = useUserStore().uuid;
+        const apiUrl = "/api/user/cart/" + uuid;
+        console.log("api: " + apiUrl);
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const cart = await response.json();
+        this.cart = cart;
+        console.log(cart);
+      } catch (error) {
+        console.error("Error during api-call:", error);
+        throw error;
+      }
+    },
   },
 };
 </script>

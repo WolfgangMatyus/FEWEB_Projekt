@@ -41,6 +41,18 @@
         <Button type="submit">Delete Product by UUID</Button>
       </form>
     </div>
+    <Button @click="getAllCarts">Get All Carts</Button>
+    <div v-if="$data.carts">
+      <div class="row" v-if="carts.length > 0">
+        <div v-for="(carts, index) in carts" :key="index">
+          Carts-UUID: {{ carts.uuid }} -- Products: {{ carts.products }}
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      {{ carts.length === 0 ? "No users available" : "Loading users..." }}
+    </div>
+    <hr />
   </div>
 </template>
 <script>
@@ -64,6 +76,7 @@ export default {
       },
       users: [],
       products: [],
+      carts: [],
     };
   },
   methods: {
@@ -132,6 +145,32 @@ export default {
         const products = await response.json();
         this.products = products;
         console.log(products);
+      } catch (error) {
+        console.error("Error during api-call:", error);
+        throw error;
+      }
+    },
+    async getAllCarts() {
+      try {
+        const accessToken = localStorage.getItem("access_token");
+
+        const apiUrl = "/api/admin/carts";
+        console.log("api: " + apiUrl);
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const carts = await response.json();
+        this.carts = carts;
+        console.log(carts);
       } catch (error) {
         console.error("Error during api-call:", error);
         throw error;
