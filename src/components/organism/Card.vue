@@ -1,9 +1,9 @@
 <!-- Card.vue -->
 <template>
     <div class="card">
-      <CardHead :title="cardData.title" :subtitle="cardData.subtitle" />
+      <CardHead :name="cardData.name" :price="cardData.price" :category="cardData.category" />
       <hr>
-      <CardBody :content="cardData.content" :imageUrl="cardData.imageUrl" />
+      <CardBody :uuid="cardData.uuid" :imageUrl="imageUrl" />
       <hr>
       <CardFooter :buttonText="cardData.buttonText" @footer-button-click="onFooterButtonClick" />
     </div>
@@ -21,6 +21,12 @@
       CardFooter
     },
     props: ['cardData'],
+    data(){
+     return {
+      imageUrl: '/img/SYS_logo.jpg',
+     };
+    },
+    
     methods: {
       onFooterButtonClick() {
         // Handle the button click event

@@ -1,21 +1,19 @@
 <template>
   <form @submit.prevent="submitForm">
-    <label for="username">Username:</label>
+    <label for="name">Name:</label>
     <br />
-    <input v-model="formData.username" type="text" id="username" />
+    <input v-model="formData.name" type="text" id="name" />
     <br />
-    <label for="password">Password:</label>
+    <label for="category">Kategorie:</label>
     <br />
-    <input v-model="formData.password" type="password" id="password" />
+    <input v-model="formData.category" type="text" id="category" />
     <br />
-    <button type="submit">Login</button>
+    <label for="price">Preis:</label>
+    <br />
+    <input v-model="formData.price" type="number" id="price" />
+    <br />
+    <button type="submit">Add Product</button>
   </form>
-  <div>
-    <Modal v-if="showModal" @closeModal="closeModal">
-      <!-- Content to display in the modal goes here -->
-      <p>Missing Credentials</p>
-    </Modal>
-  </div>
 </template>
 
 <script>
@@ -23,15 +21,16 @@ import { ref } from "vue";
 //import FormField from "@/components/molecules/FormField.vue";
 
 export default {
-  name: "LoginForm",
+  name: "ProductForm",
   components: {
     //FormField,
   },
   setup(_, { emit }) {
     // Reactive properties for form fields
     const formData = ref({
-      username: "",
-      password: "",
+      name: "",
+      category: "",
+      price: "",
     });
 
     const submitForm = () => {
