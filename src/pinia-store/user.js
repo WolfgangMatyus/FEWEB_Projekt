@@ -29,8 +29,6 @@ export const useUserStore = defineStore("user", {
         const apiUrl = "/api/user/" + username;
         const accessToken = localStorage.getItem("access_token");
 
-        console.log(accessToken);
-
         const response = await fetch(apiUrl, {
           method: "GET",
           headers: {
@@ -46,9 +44,6 @@ export const useUserStore = defineStore("user", {
         const data = await response.json();
         //const firstRow = data.user[0];
         //const usersArray = data.users;
-        console.log(data);
-        console.log(username);
-        console.log(data.uuid);
 
         this.uuid = data.uuid;
         this.salutation = data.salutation;

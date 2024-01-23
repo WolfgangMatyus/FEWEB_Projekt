@@ -15,6 +15,12 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
             {{ this.store.uuid }}
           </div>
           <div>
+            <b> Profile Picture: </b>
+          </div>
+          <div>
+            <Image :url="imageUrl" />
+          </div>
+          <div>
             <b> Gender: </b>
             {{ this.store.gender }}
           </div>
@@ -39,7 +45,6 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
       <UpdateForm @form-submitted="handleFormSubmitted" />
 
       <hr />
-      <Paragraph>{{ ParagraphContent }}</Paragraph>
     </div>
   </div>
 </template>
@@ -47,6 +52,7 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
 <script>
 import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
+import Image from '@/components/atoms/Image.vue';
 import { useUserStore } from "@/pinia-store/user";
 import Button from "@/components/atoms/Button.vue";
 import UpdateForm from "@/components/molecules/UpdateForm.vue";
@@ -59,6 +65,7 @@ export default {
     Paragraph,
     Button,
     UpdateForm,
+    Image,
   },
   setup() {
     const registeredUser = ref(null);
@@ -97,12 +104,11 @@ export default {
       store: useUserStore(),
       titleType: "h1",
       titleContent: "Über uns",
-      ParagraphContent:
-        "Wir sind 3 Fh- Kollegen die Spaß an Webentwicklung haben.",
+      imageUrl: '/img/'+ useUserStore().gender +'.png',
+      
     };
   },
   mounted: async function () {
-    console.log("mounted about");
     console.log(this.store.isLoggedIn);
   },
 };
