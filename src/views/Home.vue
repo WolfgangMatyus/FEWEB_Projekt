@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <div class="Home">
+      <Button @click="getProducts">Get All Products</Button>
+      <div v-if="isLoading">Loading...</div>
       <Title :type="titleType">{{ titleContent }}</Title>
       <div>
         <Paragraph>{{ subtitleContent }}</Paragraph>
@@ -23,6 +25,11 @@
           {{ result.title }}
         </li>
       </ul>
+
+    <div>
+      {{ products }}
+    </div>
+
       <div class="row">
         <!-- Verwenden Sie filteredCards anstelle von cards -->
         <Card
@@ -42,6 +49,7 @@ import Title from "@/components/atoms/Title.vue";
 import Paragraph from "@/components/atoms/Paragraph.vue";
 import Card from "@/components/organism/Card.vue";
 import SearchField from "@/components/molecules/SearchField.vue";
+import Button from "@/components/atoms/Button.vue";
 
 export default {
   name: "Home",
@@ -50,6 +58,7 @@ export default {
     Paragraph,
     Card,
     SearchField,
+    Button,
   },
   data() {
     return {
@@ -66,6 +75,8 @@ export default {
       searchPlaceholder: "Search...",
       searchQuery: "",
       searchResults: [],
+      products: [],
+      isLoading: false,
       cards: [
         {
           id: 1,
@@ -130,11 +141,38 @@ export default {
     handleInput(query) {
       this.searchQuery = query;
     },
+    async getProducts() {
+      console.log("hierher?");
+      try {
+        this.isLoading = true;
+        
+        const apiUrl = "/api/products";
+
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const products = await response.json();
+        this.products = products;
+        console.log(products);
+      } catch (error) {
+        console.error("Error during api-call:", error);
+        // handle error
+      } finally {
+       this.isLoading = false;
+      }
+    },
   },
   created() {
     // Listen for the search event from Navigation.vue
     mitt().on("search", this.handleInput);
   },
+  
 };
 </script>
 
