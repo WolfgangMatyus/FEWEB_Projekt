@@ -72,6 +72,7 @@ export default {
 
     const handleFormSubmitted = async (formData) => {
       try {
+
         const accessToken = localStorage.getItem("access_token");
         const uuid = useUserStore().uuid;
         console.log("/api/user/" + uuid);
