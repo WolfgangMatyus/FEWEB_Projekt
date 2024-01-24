@@ -173,7 +173,6 @@ export default {
       }
     };
 
-    const registeredUser = ref(null);
     const newProduct = ref(null);
     const updatedUser = ref(null);
 
