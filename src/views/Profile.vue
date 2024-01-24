@@ -4,39 +4,6 @@ import Paragraph from '@/components/atoms/Paragraph.vue';
     <div class="Profile">
       <Title :type="titleType">{{ titleContent }}</Title>
 
-      <form @submit.prevent="submitForm">
-        <label for="uuid">product-uuid:</label>
-        <br />
-        <input v-model="productData.uuid" type="UUID" id="uuid" />
-        <br />
-        <button type="submit">Buy Product via uuid</button>
-      </form>
-      <hr />
-      <Button @click="getCart">Get my Cart</Button>
-      <div
-        v-if="
-          $data.cart && $data.cart.products && $data.cart.products.length > 0
-        "
-      >
-        <div>
-          <h3>Cart-UUID: {{ cart.uuid }}</h3>
-          <div v-for="product in cart.products" :key="product.uuid">
-            <!-- Render content for each product -->
-            <p>Name: {{ product.name }}</p>
-            <p>Kategorie: {{ product.category }}</p>
-            <p>Preis: {{ product.price }}</p>
-            <!-- Add more details or customize as needed -->
-            <hr />
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <!-- Render loading or placeholder content -->
-        No products in the cart
-      </div>
-      <hr />
-      <ProductForm @form-submitted="handleFormSubmitted2" />
-
       <hr />
       <div class="row"> 
         <div class="col">
